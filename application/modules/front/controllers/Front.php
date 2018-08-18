@@ -10,6 +10,7 @@ class Front extends CI_Controller
     {
         $data['body'] = 'index';
         $this->controller->load_view($data);
+
     }
     public function about(){
         $data['body'] = 'about';
@@ -153,4 +154,80 @@ class Front extends CI_Controller
         }
     }
 
+   /*
+   **  Add into Cart using Ajax post request
+   */
+   public function add()
+     {
+
+       $this->load->library("cart");
+       $data = array(
+           "id"  => $_POST["product_id"],
+           "name"  => $_POST["product_name"],
+           "qty"  => $_POST["quantity"],
+           "price"  => $_POST["product_price"],
+           "image"  => $_POST["product_image"],
+       );
+       $this->cart->insert($data); //return rowid 
+    }
+    public function viewcart()
+    {
+        //print_r($this->cart->contents()); die;
+  
+       if(count($this->cart->contents())>0)
+       {
+            $output ='<div class="ast_cart_box">
+                  <div class="ast_cart_list">
+                 <ul>';
+            $count = 0;
+            $total= 0;
+            foreach($this->cart->contents() as $items)
+            {    
+               $count++;
+               $url = base_url("asset/front/images/content/Products/").$items['image'];
+               $cartitemid= $items['rowid'];
+               $output .='<li>
+                            <div class="ast_cart_img">
+                     <img src="'.$url.'" class="img-responsive">
+                            </div>
+                            <div class="ast_cart_info">
+                                <a href="#">'.$items["name"].'</a>
+                                <p>1 X $'.$items["price"].'</p>
+                                <a href="javascript:void(0);" id="'.$items['rowid'].'" class="ast_cart_remove ast_remove_item" 
+                                ><i class="fa fa-trash"></i></a>
+                            </div>
+                          </li>';
+
+               $total+=   $items["price"];                              
+             }       
+            $output .= '</ul>
+               </div>
+               <div class="ast_cart_total">
+                    <p>total<span>$'.$total.'</span></p>
+               </div>
+               <div class="ast_cart_btn">
+                    <button type="button">view cart</button>
+                    <button type="button">checkout</button>
+               </div>
+            </div>';
+
+          echo $output;
+       }
+
+       
+    }
+
+/*
+**  Remove Cart item by rowid
+*/
+
+    public function remove()
+    { 
+      $row_id = $_POST["row_id"];
+      $data = array(
+       'rowid'  => $row_id,
+       'qty'  => 0
+      );
+      $this->cart->update($data);
+     }
 }
