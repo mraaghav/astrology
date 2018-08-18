@@ -104,45 +104,45 @@ $(document).ready(function() {
     };
     date_input.datepicker(options);
 });
-$('#register_btn').click(function(e) {
-    e.preventDefault();
-    var first_name = $('#first_name').val();
-    var last_name = $('#last_name').val();
-    var email = $('#email').val();
-    var password = $('#password').val();
-    var gender = $('#gender').val();
-    var mobile = $('#mobile').val();
+// $('#register_btn').click(function(e) {
+//     e.preventDefault();
+//     var first_name = $('#first_name').val();
+//     var last_name = $('#last_name').val();
+//     var email = $('#email').val();
+//     var password = $('#password').val();
+//     var gender = $('#gender').val();
+//     var mobile = $('#mobile').val();
     
-    if (isAlphaOrParen(first_name)) {
-        return true;
-    }else{
-        $('#error_first_name').html('first name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(first_name)) {
+//         return true;
+//     }else{
+//         $('#error_first_name').html('first name must be alphabetic');
+//         return false;
+//     }
     
-    if (isAlphaOrParen(last_name)) {
-        return true;
-    }else{
-         $('#error_last_name').html('last name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(last_name)) {
+//         return true;
+//     }else{
+//          $('#error_last_name').html('last name must be alphabetic');
+//         return false;
+//     }
 
-    if (isEmail(email)) {
-        return true;
-    }else{
-         $('#error_email').html('email must be valid format');
-        return false;
-    }
+//     if (isEmail(email)) {
+//         return true;
+//     }else{
+//          $('#error_email').html('email must be valid format');
+//         return false;
+//     }
 
-    if (validatePhone(mobile)) {
-        return true;
-    }else{
-         $('#error_mobile').html('mobile must be numeric and 10 characters');
-        return false;
-    }
+//     if (validatePhone(mobile)) {
+//         return true;
+//     }else{
+//          $('#error_mobile').html('mobile must be numeric and 10 characters');
+//         return false;
+//     }
 
 
-});
+// });
 
 function isAlphaOrParen(str) {
     return /^[a-zA-Z()]+$/.test(str);
@@ -162,9 +162,41 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
+// $('#register_btn').click(function() {
 
+//     alert('sdfgfg');
+
+//     var form_data = {
+//         first_name: $('#first_name').val(),
+//         last_name: $('#last_name').val()
+//         email: $('#email').val(),
+//         password : $('#password').val(),
+//         mobile : $('#mobile').val(),
+//         gender : $('#gender').val()
+            
+//     };
+//     $.ajax({
+//         url: "<?php echo site_url('contact/submit'); ?>",
+//         type: 'POST',
+//         data: form_data,
+//         success: function(msg) {
+//             if (msg == "no")
+//             {   
+//                 $('#contact_form').append(msg);
+//             }
+//             if (msg == "yes")
+//             {   
+//                 $('#contact_form').append(msg);
+//             }               
+
+//         }
+//     });
+
+//     return false;
+// });
 
 </script>
+
 </body>
 
 </html>
