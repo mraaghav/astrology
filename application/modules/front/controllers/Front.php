@@ -8,6 +8,7 @@ class Front extends CI_Controller
     }
     public function index($msg = NULL)
     {
+        $data['horoscopes'] = $this->model->getAll('horoscope','');
         $data['body'] = 'index';
         $this->controller->load_view($data);
     }
