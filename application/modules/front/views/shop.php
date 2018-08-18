@@ -1,4 +1,4 @@
-<!--Breadcrumb start-->
+Breadcrumb start-->
 <div class="ast_pagetitle">
     <div class="ast_img_overlay"></div>
     <div class="container">
@@ -29,13 +29,35 @@
             </div>
         </div>
     </div>
+    <?php //echo "<pre>";print_r($products); ?>
     <!-- Google add Ends -->
     <div class="container">
         <div class="row">
             <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
                 <div class="row">
                     <div class="ast_shop_main">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        <?php foreach ($products as $key => $product) {?>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                            <div class="ast_product_section">
+                                <div class="ast_product_image">
+                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/uploads/').$product->image ?>" class="img-responsive"></a>
+                                </div>
+                                <div class="ast_product_info">
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <i class="fa fa-star-o"></i>
+                                    <h4 class="ast_shop_title"><a href="shop_single.html"><?php echo $product->name; ?></a></h4>
+                                    <p>$<?php echo $product->price; ?></p>
+                                    <div class="ast_info_bottom">
+                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php } ?>
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                             <div class="ast_product_section">
                                 <div class="ast_product_image">
                                     <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Navgrah.jpg')?>" class="img-responsive"></a>
@@ -53,8 +75,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+                        </div> -->
+                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                             <div class="ast_product_section">
                                 <div class="ast_product_image">
                                     <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Rudhrakhsa.jpg')?>" class="img-responsive"></a>
@@ -205,8 +227,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        </div> -->
+                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div class="ast_pagination">
                                 <ul class="pagination">
                                     <li><a href="#">1</a></li>
@@ -215,7 +237,7 @@
                                     <li><a class="active" href="#">Next</a></li>
                                 </ul>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -257,4 +279,4 @@
         </div>
     </div>
 </div>
-<!-- shop section end -->
+<!-- shop section end 

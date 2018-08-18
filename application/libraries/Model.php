@@ -12,6 +12,24 @@ class Model
         $this->CI->load->library('session', 'form_validation');
         $this->CI->load->database();
     }
+    function login($username, $password)
+    {
+       $this->CI->db->select('id, email, password,first_name,last_name,user_role');
+       $this->CI->db->from('users');
+       $this->CI->db->where('email', $username);
+       $this->CI->db->where('password', ($password));
+       $this->CI->db->where('user_role', '2');
+         $this->CI->db->limit(1);
+         $query = $this->CI->db->get();
+       if($query -> num_rows() == 1)
+       {
+         return $query->result();
+       }
+       else
+       {
+         return false;
+       }
+    }
     public function insertData($table, $dataInsert)
     {
         $this->CI->db->insert($table, $dataInsert);
