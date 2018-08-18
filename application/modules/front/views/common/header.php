@@ -55,13 +55,15 @@
                                 </div>
                             </li>
                             <li class="ast_cart">
-                                <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
-                                <div class="ast_cart_box">
-                                    <div class="ast_cart_list">
+                                <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
+                                 <div id="customcart">
+                            <!-- <div class="ast_cart_box">
+                                   <div class="ast_cart_list">
                                         <ul>
+
                                             <li>
                                                 <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
+                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
                                                 </div>
                                                 <div class="ast_cart_info">
                                                     <a href="#">Yellow Sapphire</a>
@@ -71,7 +73,7 @@
                                             </li>
                                             <li>
                                                 <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
+                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
                                                 </div>
                                                 <div class="ast_cart_info">
                                                     <a href="#">yantra</a>
@@ -79,6 +81,7 @@
                                                     <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </li>
+                                        
                                         </ul>
                                     </div>
                                     <div class="ast_cart_total">
@@ -88,7 +91,9 @@
                                         <button type="button">view cart</button>
                                         <button type="button">checkout</button>
                                     </div>
-                                </div>
+                                  
+                                </div> -->
+                              </div>
                             </li>
                         </ul>
                         <!---->

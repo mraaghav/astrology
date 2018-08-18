@@ -49,7 +49,8 @@
                                     <h4 class="ast_shop_title"><a href="shop_single.html">navgraha Yantra</a></h4>
                                     <p>$30.00</p>
                                     <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
+                                        <input type="hidden" name="quantity" class="form-control quantity" id="1">
+                                        <a href="javascript:void(0)" data-image="thumb1.jpg" data-id="420" data-price="30.00" data-name="navgraha Yantra" class="ast_add_cart ast_btn">add to cart</a>
                                     </div>
                                 </div>
                             </div>
