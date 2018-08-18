@@ -416,8 +416,9 @@ class Admin extends CI_Controller
             echo '1';
         }
     }
-    public function file_upload($file, $id, $field_name)
+    public function file_upload($file, $id=null, $field_name=null)
     {
+        
         if (!empty($_FILES["$file"]["name"])) {
             $cpt  = count($_FILES["$file"]["name"]);
             $data = array();
@@ -433,7 +434,10 @@ class Admin extends CI_Controller
                     $store                            = 'asset/uploads/' . $f_newfile;
                     $image1                           = move_uploaded_file($f_tmp, $store);
                     $data['image'][$i]['image']       = $f_newfile;
-                    $data['image'][$i]["$field_name"] = $id;
+                    if(!empty($field_name) && !empty($id)){
+                        $data['image'][$i]["$field_name"] = $id;
+                    }
+                    
                 }
             }
             return $data;
@@ -512,6 +516,133 @@ class Admin extends CI_Controller
         if ($this->controller->checkSession()) {
             $data['products'] = $this->model->getAllwhere('products');
             $data['body']     = 'list_products';
+            $this->controller->load_view($data);
+        } else {
+            redirect('admin/index');
+        }
+    }
+
+    public function pages($id=null){
+        if ($this->controller->checkSession()) {
+            $this->form_validation->set_rules('page_name', 'Page Name', 'trim|required|min_length[2]');
+            if ($this->form_validation->run() == false) {
+                $this->session->set_flashdata('errors', validation_errors());
+                if(!empty($id)){
+                    $where = array('id'=>$id);
+                    $data['page'] = $this->model->getAllwhere('pages',$where);
+                }
+                $data['body']     = 'add_pages';
+                $this->controller->load_view($data);
+            } else {
+                $page_name          = $this->input->post('page_name');
+                $title              = $this->input->post('page_title');
+                $meta_title         = $this->input->post('meta_title');
+                $meta_keywords      = $this->input->post('meta_keywords');
+                $meta_description   = $this->input->post('meta_description');
+
+                
+                $data        = array(
+                    'page_name' => $page_name,
+                    'page_title' => $title,
+                    'meta_title' => $meta_title,
+                    'meta_keywords' => $meta_keywords,
+                    'meta_description' => $meta_description,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                );
+                if (!empty($id)) {
+                    $where = array('id'=>$id);
+                    unset($data['created_at']);
+                    $result = $this->model->updateFields('pages', $data, $where);
+                    $last_id = $id;
+                } else {
+                    $last_id = $this->model->insertData('pages', $data);
+                }
+                
+                if ($last_id) {
+                    $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
+                } else {
+                    $this->session->set_flashdata('error_msg', "Something Went Wrong");
+                }
+                redirect('/admin/list_pages', 'refresh');
+            }
+        } else {
+            redirect('admin/index');
+        }
+    }
+
+    public function list_pages(){
+        if ($this->controller->checkSession()) {
+            $data['pages'] = $this->model->getAllwhere('pages');
+            $data['body']     = 'list_pages';
+            $this->controller->load_view($data);
+        } else {
+            redirect('admin/index');
+        }
+    }
+
+
+
+    public function horoscopes($id=null){
+        if ($this->controller->checkSession()) {
+
+            $this->form_validation->set_rules('horoscope_name', 'Horoscope Name', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('short_desc', 'Short Description', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('full_desc', 'Full Description', 'trim|required|min_length[2]');
+                       
+            if ($this->form_validation->run() == false) {
+                $this->session->set_flashdata('errors', validation_errors());
+                if(!empty($id)){
+                    $where = array('id'=>$id);
+                    $data['horoscopes'] = $this->model->getAllwhere('horoscope',$where);
+                }
+                $data['body']     = 'horoscopes';
+                $this->controller->load_view($data);
+            } else {
+                $horoscope_name   = $this->input->post('horoscope_name');
+                $short_desc       = $this->input->post('short_desc');
+                $full_desc        = $this->input->post('full_desc');
+                
+                $data        = array(
+                    'horoscope_name' => $horoscope_name,
+                    'short_desc' => $short_desc,
+                    'brief_desc' => $full_desc,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                );
+                
+                if (!empty($id)) {
+                    $where = array('id'=>$id);
+                    unset($data['created_at']);
+                    $result = $this->model->updateFields('horoscope', $data, $where);
+                    $last_id = $id;
+                } else {
+                    $last_id = $this->model->insertData('horoscope', $data);
+                }
+
+                if (!empty($_FILES['horoscope_img']['name'][0])) {
+                    $images = $this->file_upload('horoscope_img');
+                    $where  = array('id' => $last_id);
+                    $data    = array('image'=>$images['image'][0]['image']);
+                    $this->model->updateFields('horoscope', $data, $where);
+                }
+                
+                if ($last_id) {
+                    $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
+                } else {
+                    $this->session->set_flashdata('error_msg', "Something Went Wrong");
+                }
+                redirect('/admin/list_horoscopes', 'refresh');
+            }
+        } else {
+            redirect('admin/index');
+        }
+    }
+
+    public function list_horoscopes(){
+        if ($this->controller->checkSession()) {
+            $data['horoscopes'] = $this->model->getAllwhere('horoscope');
+            $data['body']     = 'list_horoscopes';
             $this->controller->load_view($data);
         } else {
             redirect('admin/index');

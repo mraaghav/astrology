@@ -106,45 +106,45 @@ $(document).ready(function() {
     };
     date_input.datepicker(options);
 });
-$('#register_btn').click(function(e) {
-    e.preventDefault();
-    var first_name = $('#first_name').val();
-    var last_name = $('#last_name').val();
-    var email = $('#email').val();
-    var password = $('#password').val();
-    var gender = $('#gender').val();
-    var mobile = $('#mobile').val();
+// $('#register_btn').click(function(e) {
+//     e.preventDefault();
+//     var first_name = $('#first_name').val();
+//     var last_name = $('#last_name').val();
+//     var email = $('#email').val();
+//     var password = $('#password').val();
+//     var gender = $('#gender').val();
+//     var mobile = $('#mobile').val();
     
-    if (isAlphaOrParen(first_name)) {
-        return true;
-    }else{
-        $('#error_first_name').html('first name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(first_name)) {
+//         return true;
+//     }else{
+//         $('#error_first_name').html('first name must be alphabetic');
+//         return false;
+//     }
     
-    if (isAlphaOrParen(last_name)) {
-        return true;
-    }else{
-         $('#error_last_name').html('last name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(last_name)) {
+//         return true;
+//     }else{
+//          $('#error_last_name').html('last name must be alphabetic');
+//         return false;
+//     }
 
-    if (isEmail(email)) {
-        return true;
-    }else{
-         $('#error_email').html('email must be valid format');
-        return false;
-    }
+//     if (isEmail(email)) {
+//         return true;
+//     }else{
+//          $('#error_email').html('email must be valid format');
+//         return false;
+//     }
 
-    if (validatePhone(mobile)) {
-        return true;
-    }else{
-         $('#error_mobile').html('mobile must be numeric and 10 characters');
-        return false;
-    }
+//     if (validatePhone(mobile)) {
+//         return true;
+//     }else{
+//          $('#error_mobile').html('mobile must be numeric and 10 characters');
+//         return false;
+//     }
 
 
-});
+// });
 
 function isAlphaOrParen(str) {
     return /^[a-zA-Z()]+$/.test(str);
@@ -164,7 +164,9 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
+// $('#register_btn').click(function() {
 
+ 
 $(".ast_add_cart").click(function(){
 
      var product_id = $(this).data("id");
@@ -175,6 +177,7 @@ $(".ast_add_cart").click(function(){
  
      if(quantity != '' && quantity > 0)
       {
+
        $.ajax({
         url:"<?php echo base_url(); ?>front/add",
         method:"POST",
@@ -183,7 +186,7 @@ $(".ast_add_cart").click(function(){
         {
 
           alert("Product Added into Cart");
-          $('#cart_details').html(data);
+         // $('#cart_details').html(data);
           $('#' + product_id).val('');
         }
        });
@@ -199,30 +202,20 @@ $(".ast_add_cart").click(function(){
 */
 $(".carticon").click(function(){
  
+   
     $.ajax({
         url:"<?php echo base_url(); ?>front/viewcart",
         method:"GET",
         success:function(data)
         {
-          
+          alert(data);
           $('#customcart').html(data);
         }
        });
  
 });
 
-$(".ast_cart_remove").click(function(){
 
-   $.ajax({
-        url:"<?php echo base_url(); ?>front/viewcart",
-        method:"POST",
-        //data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
-        success:function(data)
-        {
-         $('#customcart').html(data);
-        }
-      });
-});
 
 $(document).on('click', '.ast_remove_item', function(){
    
@@ -236,9 +229,7 @@ $(document).on('click', '.ast_remove_item', function(){
           data:{row_id:row_id},
           success:function(data)
           {
-            //alert(data);
             //alert("Product removed from Cart");
-            //$('#cart_details').html(data);
             window.location.reload();
           }
        }); 
@@ -251,8 +242,7 @@ $(document).on('click', '.ast_remove_item', function(){
  
 function loadintocart()
 {
-   
-    
+
       $.ajax({
         url:"<?php echo base_url(); ?>front/add",
         method:"POST",
@@ -281,7 +271,7 @@ function removeitem($id)
           data:{row_id:row_id},
           success:function(data)
           {
-            alert(data);
+            //alert(data);
             alert("Product removed from Cart");
 
             $('#cart_details').html(data);
@@ -294,8 +284,10 @@ function removeitem($id)
     }
 }
 
+ 
 
 </script>
+
 </body>
 
 </html>

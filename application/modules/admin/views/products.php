@@ -41,7 +41,7 @@
                                     <div class="col-lg-6"> <input class="form-control" type="text" name="price" id="price" placeholder="Price" autocomplete="off" required="required" value="<?php if(!empty($products[0]->price)){ echo $products[0]->price;}else{ echo set_value('price');} ?>"> <span class="red">
                                             <?php echo form_error('price'); ?></span> </div>
                                 </div>
-                                <div class="form-group"> <label class="col-md-2">Description </label>
+                                <div class="form-group"> <label class="col-md-2">Short Description </label>
                                     <div class="col-lg-6"> <textarea name="description" id="description" class="form-control" placeholder="Product Description"><?php if(!empty($products[0]->description)){ echo $products[0]->description;}else{ echo set_value('description');} ?></textarea><span class="red" id="new">
                                             <?php echo form_error('description'); ?></span> </div>
                                 </div>

@@ -8,6 +8,7 @@ class Front extends CI_Controller
     }
     public function index($msg = NULL)
     {
+        $data['horoscopes'] = $this->model->getAll('horoscope','');
         $data['body'] = 'index';
         $this->controller->load_view($data);
 
@@ -17,6 +18,13 @@ class Front extends CI_Controller
         $this->controller->load_view($data);
     }
     public function shop(){
+        //$data['product'] = $this->model->getAll('products','');
+        $where                   = array(
+            'products.is_active' => 1
+        );
+
+        $data['products'] = $this->model->GetJoinRecord('products', 'id', 'product_images', 'product_id','products.id  as p_id,products.name,products.price,products.description,product_images.image', $where , 'products.id');
+        //print_r($data);
         $data['body'] = 'shop';
         $this->controller->load_view($data);
     }
@@ -40,6 +48,115 @@ class Front extends CI_Controller
         print_r($data);
         echo '</pre>';
     }
+    public function signup(){
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('first_name', 'First Name', 'required');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required',
+                array('required' => 'You must provide a %s.')
+        );
+        //$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('mobile','Mobile', 'required');
+        $this->form_validation->set_rules('gender','Gender', 'required');
+
+        if ($this->form_validation->run() == FALSE)
+        {
+                //$this->session->set_flashdata('user', 'User Detailes has been Added Successfully');
+              $data['body'] = 'index';
+             $this->controller->load_view($data);
+        }
+        else
+        {   
+            if(isset($_POST['submit'])){
+            $rand = rand (10000 , 99999);
+            $data = array(
+            'first_name' => $this->input->post('first_name'),
+            'last_name' => $this->input->post('last_name'),
+            'password' => md5($this->input->post('password')),
+            'email' => $this->input->post('email'),
+            'username' => $this->input->post('first_name').'_'.$rand,
+            'mobile' => $this->input->post('mobile'),
+            'gender' => $this->input->post('gender'),
+            'user_role' => 2
+            );
+            //print_r($data); die;
+            $result = $this->model->insertData('users', $data);
+
+              $this->session->set_flashdata('user', 'User Detailes has been Added Successfully');
+              $data['body'] = 'index';
+             $this->controller->load_view($data);
+            }
+        }
+
+    }
+
+    public function signin() {
+
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
+
+        $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+
+        $data['error'] = "";
+
+        if ($this->form_validation->run() == FALSE) {
+
+            //Field validation failed.  User redirected to login page
+            $data['body'] = 'index';
+            $this->controller->load_view($data);
+
+        } else {
+
+            //Go to private area
+
+            $email = $this->input->post('email');
+
+            $password = md5($this->input->post('password'));
+
+            $result = $this->model->login($email, $password);
+
+            //print_r($result); die();
+
+            if ($result) {
+
+                $sess_array = array();
+
+                foreach ($result as $row) {
+
+                    $sess_array = array(
+
+                        'id' => $row->id,
+
+                        'username' => $row->first_name,
+
+                        'userrole' =>$row->user_role,
+
+                    );
+
+                    $this->session->set_userdata('logged_in', $sess_array);
+                    $this->session->set_flashdata('user_login', 'User Login Successfully');
+                    $data['body'] = 'index';
+                    $this->controller->load_view($data);
+                }
+
+                } else {
+
+                $data['error'] = "Invalid usrername or password";
+                $data['body'] = 'index';
+                $this->controller->load_view($data);
+
+            }
+
+        }
+
+    }
+    // public function logout(){
+    //  $this->session->sess_destroy();
+    //  $data['body'] = 'index';
+    //  $this->controller->load_view($data); 
+    // }
     public function verifylogin()
     {
         $data = $this->input->post();
@@ -154,13 +271,14 @@ class Front extends CI_Controller
         }
     }
 
+ 
    /*
    **  Add into Cart using Ajax post request
    */
    public function add()
      {
 
-       $this->load->library("cart");
+       //$this->load->library("cart");
        $data = array(
            "id"  => $_POST["product_id"],
            "name"  => $_POST["product_name"],
@@ -172,7 +290,7 @@ class Front extends CI_Controller
     }
     public function viewcart()
     {
-        //print_r($this->cart->contents()); die;
+         //print_r($this->cart->contents()); die;
   
        if(count($this->cart->contents())>0)
        {
@@ -230,4 +348,76 @@ class Front extends CI_Controller
       );
       $this->cart->update($data);
      }
+ 
+
+    public function contactus(){
+        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[2]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('subject', 'Subject', 'trim|required|min_length[2]');
+        $this->form_validation->set_rules('message', 'Message', 'trim|required|min_length[2]');
+                   
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            if(!empty($id)){
+                $where = array('id'=>$id);
+                $data['horoscopes'] = $this->model->getAllwhere('contact',$where);
+            }
+            $data['body']     = 'contact';
+            $this->controller->load_view($data);
+        } else {
+            $first_name  = $this->input->post('first_name');
+            $email       = $this->input->post('email');
+            $subject     = $this->input->post('subject');
+            $message     = $this->input->post('message');
+            $last_name   = $this->input->post('last_name');
+            
+            $data        = array(
+                'first_name' => $first_name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+                'last_name' => $last_name,
+                'is_active' => 1,
+                'created_at' => date('Y-m-d H:i:s')
+            );
+            
+            
+            $last_id = $this->model->insertData('contact', $data);
+                        
+            if ($last_id) {
+                $this->email_send($email,$subject,$message);
+                $this->session->set_flashdata('info_message', 'Enquiry Successfully Submitted!!!');
+            } else {
+                $this->session->set_flashdata('error_msg', "Something Went Wrong");
+            }
+            redirect('/front/contact', 'refresh');
+        }
+        
+    }
+
+
+    public function email_send($to,$subject,$msg){
+        $config_mail = Array(
+                    'protocol'  => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => '465',
+                    'smtp_user' => 'webdeskytechnical@gmail.com',
+                    'smtp_pass' => 'webdesky$2018',
+                    'mailtype'  => 'html',
+                    'charset'   => 'iso-8859-1',
+                    'newline'   => "\r\n"
+                    );
+        $this->load->library('email', $config_mail);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
+        $this->email->from('webdeskytechnical@gmail.com','Webdesky');
+        $this->email->to($to);
+        $this->email->subject($subject);
+        $this->email->message($msg);
+        if (!$this->email->send()) {
+            show_error($this->email->print_debugger());
+        } 
+    }
+
+ 
 }

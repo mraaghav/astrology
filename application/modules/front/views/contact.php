@@ -76,13 +76,18 @@
                 </div>
             </div>
         </div>
+         <?php if ($info_message = $this->session->flashdata('info_message')): ?>
+            <div id="form-messages" class="alert alert-success" role="alert">
+                <?php echo $info_message; ?>
+            </div>
+            <?php endif ?>
         <div class="ast_contact_map">
             <div class="col-lg-6 col-md-8 col-sm-8 col-xs-12 col-lg-offset-3 col-md-offset-2 col-sm-offset-2 col-xs-offset-0">
                 <div class="ast_contact_form">
-                    <form>
+                    <form action="<?php echo base_url('front/contactus')?>" method="POST">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>first name</label>
-                            <input type="text" name="first_name" class="require">
+                            <input type="text" name="first_name" class="require" required="required">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>last name</label>
@@ -90,19 +95,19 @@
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>email</label>
-                            <input type="text" name="email" class="require" data-valid="email" data-error="Email should be valid.">
+                            <input type="email" name="email" class="require" data-valid="email" data-error="Email should be valid." required="required">
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>subject</label>
-                            <input type="text" name="subject" class="require">
+                            <input type="text" name="subject" class="require" required="required">
                         </div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label>message</label>
-                            <textarea rows="5" name="message" class="require"></textarea>
+                            <textarea rows="5" name="message" class="require" required="required"></textarea>
                         </div>
                         <div class="response"></div>
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button class="ast_btn pull-right submitForm" type="button" form-type="contact">send</button>
+                            <input class="ast_btn pull-right submitForm" type="submit" form-type="contact" value="send">
                         </div>
                     </form>
                 </div>
