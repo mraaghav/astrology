@@ -48,6 +48,40 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a href="#"><i class="fa fa-file-code-o fa-fw" style="font-size: 21px"></i> Pages<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo base_url('admin/pages')?>">Add Page</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/list_pages/')?>">View Pages</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw" style="font-size: 21px"></i> Content<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php //echo base_url('admin/contents')?>">Add Content</a>
+                            </li>
+                            <li>
+                                <a href="<?php //echo base_url('admin/list_contents/')?>">View Content</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-star fa-fw" style="font-size: 21px"></i> Horoscope<span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a href="<?php echo base_url('admin/horoscopes')?>">Add Horoscope</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo base_url('admin/list_horoscopes/')?>">View Horoscope</a>
+                            </li>
+                        </ul>
+                    </li>
+                     
                 </ul>
             </div>
             <!-- /.sidebar-collapse -->

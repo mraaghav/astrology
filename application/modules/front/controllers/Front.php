@@ -153,4 +153,74 @@ class Front extends CI_Controller
         }
     }
 
+
+    public function contactus(){
+        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[2]');
+        $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+        $this->form_validation->set_rules('subject', 'Subject', 'trim|required|min_length[2]');
+        $this->form_validation->set_rules('message', 'Message', 'trim|required|min_length[2]');
+                   
+        if ($this->form_validation->run() == false) {
+            $this->session->set_flashdata('errors', validation_errors());
+            if(!empty($id)){
+                $where = array('id'=>$id);
+                $data['horoscopes'] = $this->model->getAllwhere('contact',$where);
+            }
+            $data['body']     = 'contact';
+            $this->controller->load_view($data);
+        } else {
+            $first_name  = $this->input->post('first_name');
+            $email       = $this->input->post('email');
+            $subject     = $this->input->post('subject');
+            $message     = $this->input->post('message');
+            $last_name   = $this->input->post('last_name');
+            
+            $data        = array(
+                'first_name' => $first_name,
+                'email' => $email,
+                'subject' => $subject,
+                'message' => $message,
+                'last_name' => $last_name,
+                'is_active' => 1,
+                'created_at' => date('Y-m-d H:i:s')
+            );
+            
+            
+            $last_id = $this->model->insertData('contact', $data);
+                        
+            if ($last_id) {
+                $this->email_send($email,$subject,$message);
+                $this->session->set_flashdata('info_message', 'Enquiry Successfully Submitted!!!');
+            } else {
+                $this->session->set_flashdata('error_msg', "Something Went Wrong");
+            }
+            redirect('/front/contact', 'refresh');
+        }
+        
+    }
+
+
+    public function email_send($to,$subject,$msg){
+        $config_mail = Array(
+                    'protocol'  => 'smtp',
+                    'smtp_host' => 'ssl://smtp.googlemail.com',
+                    'smtp_port' => '465',
+                    'smtp_user' => 'webdeskytechnical@gmail.com',
+                    'smtp_pass' => 'webdesky$2018',
+                    'mailtype'  => 'html',
+                    'charset'   => 'iso-8859-1',
+                    'newline'   => "\r\n"
+                    );
+        $this->load->library('email', $config_mail);
+        $this->email->set_mailtype("html");
+        $this->email->set_newline("\r\n");
+        $this->email->from('webdeskytechnical@gmail.com','Webdesky');
+        $this->email->to($to);
+        $this->email->subject($subject);
+        $this->email->message($msg);
+        if (!$this->email->send()) {
+            show_error($this->email->print_debugger());
+        } 
+    }
+
 }
