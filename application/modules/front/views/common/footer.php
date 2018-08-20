@@ -167,11 +167,135 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
-$(".date").datepicker({
-    format: 'yyyy-mm-dd',
-    startDate: '+0d',
-    autoclose: true
+// <<<<<<< HEAD
+// $(".date").datepicker({
+//     format: 'yyyy-mm-dd',
+//     startDate: '+0d',
+//     autoclose: true
+// });
+// =======
+// $('#register_btn').click(function() {
+
+ 
+$(".ast_add_cart").click(function(){
+
+     var product_id = $(this).data("id");
+     var product_price = $(this).data("price");
+     var product_name = $(this).data("name");
+     var product_image=  $(this).data("image");
+     var quantity = 1;//$('#' + product_id).val();  
+ 
+     if(quantity != '' && quantity > 0)
+      {
+
+       $.ajax({
+        url:"<?php echo base_url(); ?>front/add",
+        method:"POST",
+        data:{product_id:product_id, product_name:product_name, product_price:product_price, product_image:product_image, quantity:quantity},
+        success:function(data)
+        {
+
+          alert("Product Added into Cart");
+         // $('#cart_details').html(data);
+          $('#' + product_id).val('');
+        }
+       });
+      }
+      else
+      {
+         alert("Please Enter quantity");
+      }
+
 });
+/* 
+**  Function For Load into Cart after add into cart 
+*/
+$(".carticon").click(function(){
+ 
+   
+    $.ajax({
+        url:"<?php echo base_url(); ?>front/viewcart",
+        method:"GET",
+        success:function(data)
+        {
+          alert(data);
+          $('#customcart').html(data);
+        }
+       });
+ 
+});
+
+
+
+$(document).on('click', '.ast_remove_item', function(){
+   
+   var row_id = $(this).attr("id");
+   if(confirm("Are you sure you want to remove this?"))
+    {
+       $.ajax
+       ({
+          url:"<?php echo base_url(); ?>front/remove",
+          method:"POST",
+          data:{row_id:row_id},
+          success:function(data)
+          {
+            //alert("Product removed from Cart");
+            window.location.reload();
+          }
+       }); 
+    }
+    else
+    {
+       return false;
+    }
+}); 
+ 
+function loadintocart()
+{
+
+      $.ajax({
+        url:"<?php echo base_url(); ?>front/add",
+        method:"POST",
+        data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
+        success:function(data)
+        {
+         alert("Product Added into Cart");
+         $('#cart_details').html(data);
+         $('#' + product_id).val('');
+
+        }
+       });
+ 
+};
+
+function removeitem($id)
+{
+  var row_id = $id;//$(this).attr("id");
+   alert(row_id);
+    if(confirm("Are you sure you want to remove this?"))
+    {
+       $.ajax
+       ({
+          url:"<?php echo base_url(); ?>front/remove",
+          method:"POST",
+          data:{row_id:row_id},
+          success:function(data)
+          {
+            //alert(data);
+            alert("Product removed from Cart");
+
+            $('#cart_details').html(data);
+          }
+       }); 
+    }
+    else
+    {
+       return false;
+    }
+}
+
+ 
+
 </script>
 
 </body>
