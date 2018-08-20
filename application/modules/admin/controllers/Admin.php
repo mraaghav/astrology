@@ -43,10 +43,12 @@ class Admin extends CI_Controller
     public function dashboard()
     {
         if ($this->controller->checkSession()) {
-            $user_role    = $this->session->userdata('user_role');
-            $where = array('is_active'=>1);
-            $data['totalProducts']     = $this->model->getcount('products', $where);
-            $data['body'] = 'dashboard';
+            $user_role             = $this->session->userdata('user_role');
+            $where                 = array(
+                'is_active' => 1
+            );
+            $data['totalProducts'] = $this->model->getcount('products', $where);
+            $data['body']          = 'dashboard';
             $this->controller->load_view($data);
         } else {
             redirect('admin/index');
@@ -211,8 +213,7 @@ class Admin extends CI_Controller
     }
     public function delete()
     {
-        if ($this->controller->checkSession()) 
-        {
+        if ($this->controller->checkSession()) {
             $id    = $this->input->post('id');
             $table = $this->input->post('table');
             //$field = $this->input->post('field');
@@ -416,9 +417,8 @@ class Admin extends CI_Controller
             echo '1';
         }
     }
-    public function file_upload($file, $id=null, $field_name=null)
+    public function file_upload($file, $id = null, $field_name = null)
     {
-        
         if (!empty($_FILES["$file"]["name"])) {
             $cpt  = count($_FILES["$file"]["name"]);
             $data = array();
@@ -430,14 +430,13 @@ class Admin extends CI_Controller
                 $f_extension = strtolower(end($f_extension)); //end() is used to retrun a last element to the array
                 $f_newfile   = "";
                 if ($f_name) {
-                    $f_newfile                        = uniqid() . '.' . $f_extension;
-                    $store                            = 'asset/uploads/' . $f_newfile;
-                    $image1                           = move_uploaded_file($f_tmp, $store);
-                    $data['image'][$i]['image']       = $f_newfile;
-                    if(!empty($field_name) && !empty($id)){
+                    $f_newfile                  = uniqid() . '.' . $f_extension;
+                    $store                      = 'asset/uploads/' . $f_newfile;
+                    $image1                     = move_uploaded_file($f_tmp, $store);
+                    $data['image'][$i]['image'] = $f_newfile;
+                    if (!empty($field_name) && !empty($id)) {
                         $data['image'][$i]["$field_name"] = $id;
                     }
-                    
                 }
             }
             return $data;
@@ -465,37 +464,50 @@ class Admin extends CI_Controller
     // Add Product 
     public function products($id = null)
     {
-    
         if ($this->controller->checkSession()) {
             $this->form_validation->set_rules('product_name', 'Name', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('price', 'Price', 'trim|required');
+            $this->form_validation->set_rules('brief_description', 'Brief Description', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('quantity', 'Quantity', 'trim|required');
+            $this->form_validation->set_rules('ref_no', 'Ref Number', 'trim|required');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
-                if(!empty($id)){
-                    $data['products'] = $this->db->query("SELECT x.name,x.id,x.price,x.description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
+                if (!empty($id)) {
+                    $data['products'] = $this->db->query("SELECT x.name,x.id,x.price,x.description,x.quantity,x.ref_no,x.brief_description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
                 }
-                $data['body']     = 'products';
+                $data['body'] = 'products';
                 $this->controller->load_view($data);
             } else {
-                $name        = $this->input->post('product_name');
-                $price       = $this->input->post('price');
-                $description = $this->input->post('description');
-                $data        = array(
+                $name              = $this->input->post('product_name');
+                $price             = $this->input->post('price');
+                $description       = $this->input->post('description');
+                $brief_description = $this->input->post('brief_description');
+                $quantity          = $this->input->post('quantity');
+                $ref_no            = $this->input->post('ref_no');
+                $data              = array(
                     'name' => $name,
                     'price' => $price,
                     'description' => $description,
+                    'brief_description' => $brief_description,
+                    'quantity' => $quantity,
+                    'ref_no' => $ref_no,
                     'is_active' => 1,
                     'created_at' => date('Y-m-d H:i:s')
                 );
                 if (!empty($id)) {
-                    $where = array('id'=>$id);
-                    $result = $this->model->updateFields('products', $data, $where);
+                    $where = array(
+                        'id' => $id
+                    );
+                    unset($data['created_at']);
+                    $result  = $this->model->updateFields('products', $data, $where);
                     $last_id = $id;
                 } else {
                     $last_id = $this->model->insertData('products', $data);
                 }
                 if (!empty($_FILES['images']['name'][0])) {
-                    $where1  = array('product_id' => $last_id);
+                    $where1 = array(
+                        'product_id' => $last_id
+                    );
                     $images = $this->file_upload('images', $last_id, 'product_id');
                     $this->model->delete('product_images', $where1);
                     $this->model->insertBatch('product_images', $images['image']);
@@ -521,27 +533,27 @@ class Admin extends CI_Controller
             redirect('admin/index');
         }
     }
-
-    public function pages($id=null){
+    public function pages($id = null)
+    {
         if ($this->controller->checkSession()) {
             $this->form_validation->set_rules('page_name', 'Page Name', 'trim|required|min_length[2]');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
-                if(!empty($id)){
-                    $where = array('id'=>$id);
-                    $data['page'] = $this->model->getAllwhere('pages',$where);
+                if (!empty($id)) {
+                    $where        = array(
+                        'id' => $id
+                    );
+                    $data['page'] = $this->model->getAllwhere('pages', $where);
                 }
-                $data['body']     = 'add_pages';
+                $data['body'] = 'add_pages';
                 $this->controller->load_view($data);
             } else {
-                $page_name          = $this->input->post('page_name');
-                $title              = $this->input->post('page_title');
-                $meta_title         = $this->input->post('meta_title');
-                $meta_keywords      = $this->input->post('meta_keywords');
-                $meta_description   = $this->input->post('meta_description');
-
-                
-                $data        = array(
+                $page_name        = $this->input->post('page_name');
+                $title            = $this->input->post('page_title');
+                $meta_title       = $this->input->post('meta_title');
+                $meta_keywords    = $this->input->post('meta_keywords');
+                $meta_description = $this->input->post('meta_description');
+                $data             = array(
                     'page_name' => $page_name,
                     'page_title' => $title,
                     'meta_title' => $meta_title,
@@ -551,14 +563,15 @@ class Admin extends CI_Controller
                     'created_at' => date('Y-m-d H:i:s')
                 );
                 if (!empty($id)) {
-                    $where = array('id'=>$id);
+                    $where = array(
+                        'id' => $id
+                    );
                     unset($data['created_at']);
-                    $result = $this->model->updateFields('pages', $data, $where);
+                    $result  = $this->model->updateFields('pages', $data, $where);
                     $last_id = $id;
                 } else {
                     $last_id = $this->model->insertData('pages', $data);
                 }
-                
                 if ($last_id) {
                     $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
                 } else {
@@ -570,63 +583,63 @@ class Admin extends CI_Controller
             redirect('admin/index');
         }
     }
-
-    public function list_pages(){
+    public function list_pages()
+    {
         if ($this->controller->checkSession()) {
             $data['pages'] = $this->model->getAllwhere('pages');
-            $data['body']     = 'list_pages';
+            $data['body']  = 'list_pages';
             $this->controller->load_view($data);
         } else {
             redirect('admin/index');
         }
     }
-
-
-
-    public function horoscopes($id=null){
+    public function horoscopes($id = null)
+    {
         if ($this->controller->checkSession()) {
-
             $this->form_validation->set_rules('horoscope_name', 'Horoscope Name', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('short_desc', 'Short Description', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('full_desc', 'Full Description', 'trim|required|min_length[2]');
-                       
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
-                if(!empty($id)){
-                    $where = array('id'=>$id);
-                    $data['horoscopes'] = $this->model->getAllwhere('horoscope',$where);
+                if (!empty($id)) {
+                    $where              = array(
+                        'id' => $id
+                    );
+                    $data['horoscopes'] = $this->model->getAllwhere('horoscope', $where);
                 }
-                $data['body']     = 'horoscopes';
+                $data['body'] = 'horoscopes';
                 $this->controller->load_view($data);
             } else {
-                $horoscope_name   = $this->input->post('horoscope_name');
-                $short_desc       = $this->input->post('short_desc');
-                $full_desc        = $this->input->post('full_desc');
-                
-                $data        = array(
+                $horoscope_name = $this->input->post('horoscope_name');
+                $short_desc     = $this->input->post('short_desc');
+                $full_desc      = $this->input->post('full_desc');
+                $data           = array(
                     'horoscope_name' => $horoscope_name,
                     'short_desc' => $short_desc,
                     'brief_desc' => $full_desc,
                     'is_active' => 1,
                     'created_at' => date('Y-m-d H:i:s')
                 );
-                
                 if (!empty($id)) {
-                    $where = array('id'=>$id);
+                    $where = array(
+                        'id' => $id
+                    );
                     unset($data['created_at']);
-                    $result = $this->model->updateFields('horoscope', $data, $where);
+                    $result  = $this->model->updateFields('horoscope', $data, $where);
                     $last_id = $id;
                 } else {
                     $last_id = $this->model->insertData('horoscope', $data);
                 }
-
                 if (!empty($_FILES['horoscope_img']['name'][0])) {
                     $images = $this->file_upload('horoscope_img');
-                    $where  = array('id' => $last_id);
-                    $data    = array('image'=>$images['image'][0]['image']);
+                    $where  = array(
+                        'id' => $last_id
+                    );
+                    $data   = array(
+                        'image' => $images['image'][0]['image']
+                    );
                     $this->model->updateFields('horoscope', $data, $where);
                 }
-                
                 if ($last_id) {
                     $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
                 } else {
@@ -638,12 +651,72 @@ class Admin extends CI_Controller
             redirect('admin/index');
         }
     }
-
-    public function list_horoscopes(){
+    public function list_horoscopes()
+    {
         if ($this->controller->checkSession()) {
             $data['horoscopes'] = $this->model->getAllwhere('horoscope');
-            $data['body']     = 'list_horoscopes';
+            $data['body']       = 'list_horoscopes';
             $this->controller->load_view($data);
+        } else {
+            redirect('admin/index');
+        }
+    }
+    public function settings()
+    {
+        if ($this->controller->checkSession()) {
+            
+            $this->form_validation->set_rules('horoscope_name', 'Horoscope Name', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('short_desc', 'Short Description', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('full_desc', 'Full Description', 'trim|required|min_length[2]');
+
+            if ($this->form_validation->run() == false) {
+                $this->session->set_flashdata('errors', validation_errors());
+                if (!empty($id)) {
+                    $where              = array(
+                        'id' => $id
+                    );
+                    $data['horoscopes'] = $this->model->getAllwhere('horoscope', $where);
+                }
+                $data['body'] = 'settings';
+                $this->controller->load_view($data);
+            } else {
+                $horoscope_name = $this->input->post('horoscope_name');
+                $short_desc     = $this->input->post('short_desc');
+                $full_desc      = $this->input->post('full_desc');
+                $data           = array(
+                    'horoscope_name' => $horoscope_name,
+                    'short_desc' => $short_desc,
+                    'brief_desc' => $full_desc,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                );
+                if (!empty($id)) {
+                    $where = array(
+                        'id' => $id
+                    );
+                    unset($data['created_at']);
+                    $result  = $this->model->updateFields('settings', $data, $where);
+                    $last_id = $id;
+                } else {
+                    $last_id = $this->model->insertData('settings', $data);
+                }
+                if (!empty($_FILES['horoscope_img']['name'][0])) {
+                    $images = $this->file_upload('horoscope_img');
+                    $where  = array(
+                        'id' => $last_id
+                    );
+                    $data   = array(
+                        'image' => $images['image'][0]['image']
+                    );
+                    $this->model->updateFields('settings', $data, $where);
+                }
+                if ($last_id) {
+                    $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
+                } else {
+                    $this->session->set_flashdata('error_msg', "Something Went Wrong");
+                }
+                // /redirect('/admin/list_horoscopes', 'refresh');
+            }
         } else {
             redirect('admin/index');
         }

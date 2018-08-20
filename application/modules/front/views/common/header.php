@@ -20,12 +20,13 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/owl.theme.default.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/magnific-popup.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/style.css')?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/timepicker.css')?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url('asset/front/images/header/favicon.png')?>">
     <style type="text/css">
-    	.red{
-    		color:red;
-    	}
+    	.red{color:red;}
     </style>
 </head>
 
@@ -61,10 +62,17 @@
                                 </div>
                             </li>
                             <li class="ast_cart">
+
                                 <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
                                  <div id="customcart">
                             
                                  </div>
+
+
+                               
+
+                              
+
                             </li>
                         </ul>
                         <!---->

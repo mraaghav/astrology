@@ -80,22 +80,36 @@
 </div>
 <!-- Footer wrapper End-->
 <!--Main js file Style-->
-<script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js/jquery.js')?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/bootstrap.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.magnific-popup.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/owl.carousel.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.countTo.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.appear.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/price_range_script.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/slick/jquery-migrate-1.2.1.min.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/slick/slick.min.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
-<!--Main js file End-->
+<script type="text/javascript" src="<?php echo base_url('asset/js/timepicker.js')?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js">
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-<script>
 
-     
+<script type="text/javascript">
 
 $(document).ready(function() {
+    $('#female_birth_time').timepicker({
+        timeFormat: 'h:mm:ss p',
+        interval: 1,
+        scrollbar: true
+    });
+    $('#male_birth_time').timepicker({
+        timeFormat: 'h:mm:ss p',
+        interval: 1,
+        scrollbar: true
+    });
     var date_input = $('input[name="date"]'); //our date input has the name "date"
     var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
     var options = {
@@ -105,46 +119,36 @@ $(document).ready(function() {
         autoclose: true,
     };
     date_input.datepicker(options);
+    
+    $('.add_cart').click(function() {            
+        var product_id    = $(this).data("productid");
+            var product_name  = $(this).data("productname");
+            var product_price = $(this).data("productprice");
+            var quantity      = $('#' + product_id).val();       
+        $.ajax({                
+            url: "<?php echo site_url('front/add_to_cart');?>",
+            method: "POST",
+            data : {product_id: product_id, product_name: product_name, product_price: product_price, quantity: quantity},
+            success: function(data) {                    
+                $('.ast_cart_box').html(data);                
+            }            
+        });        
+    });                  
+    
+    $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
+    
+    $(document).on('click', '.romove_cart', function() {            
+        var row_id = $(this).attr("id");            
+        $.ajax({                
+            url: "<?php echo site_url('front/delete_cart');?>",
+            method: "POST",
+            data: { row_id: row_id },
+            success: function(data) {                    
+                $('.ast_cart_box').html(data);                
+            }            
+        });        
+    });
 });
-// $('#register_btn').click(function(e) {
-//     e.preventDefault();
-//     var first_name = $('#first_name').val();
-//     var last_name = $('#last_name').val();
-//     var email = $('#email').val();
-//     var password = $('#password').val();
-//     var gender = $('#gender').val();
-//     var mobile = $('#mobile').val();
-    
-//     if (isAlphaOrParen(first_name)) {
-//         return true;
-//     }else{
-//         $('#error_first_name').html('first name must be alphabetic');
-//         return false;
-//     }
-    
-//     if (isAlphaOrParen(last_name)) {
-//         return true;
-//     }else{
-//          $('#error_last_name').html('last name must be alphabetic');
-//         return false;
-//     }
-
-//     if (isEmail(email)) {
-//         return true;
-//     }else{
-//          $('#error_email').html('email must be valid format');
-//         return false;
-//     }
-
-//     if (validatePhone(mobile)) {
-//         return true;
-//     }else{
-//          $('#error_mobile').html('mobile must be numeric and 10 characters');
-//         return false;
-//     }
-
-
-// });
 
 function isAlphaOrParen(str) {
     return /^[a-zA-Z()]+$/.test(str);
@@ -164,6 +168,13 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
+// <<<<<<< HEAD
+// $(".date").datepicker({
+//     format: 'yyyy-mm-dd',
+//     startDate: '+0d',
+//     autoclose: true
+// });
+// =======
 // $('#register_btn').click(function() {
 
  
@@ -177,15 +188,18 @@ $(".ast_add_cart").click(function(){
  
      if(quantity != '' && quantity > 0)
       {
+
        $.ajax({
         url:"<?php echo base_url(); ?>front/add",
         method:"POST",
         data:{product_id:product_id, product_name:product_name, product_price:product_price, product_image:product_image, quantity:quantity},
         success:function(data)
         {
+
           //alert(data);
           alert("Product Added into Cart");
           $('#cart_details').html(data);
+
           $('#' + product_id).val('');
         }
        });
@@ -207,12 +221,15 @@ $(".carticon").click(function(){
         method:"GET",
         success:function(data)
         {
+
           //alert(data);
+
           $('#customcart').html(data);
         }
        });
  
 });
+
 
 $(document).on('click', '.ast_remove_item', function(){
    
@@ -226,9 +243,7 @@ $(document).on('click', '.ast_remove_item', function(){
           data:{row_id:row_id},
           success:function(data)
           {
-            //alert(data);
-            //alert("Product removed from Cart");
-            //$('#cart_details').html(data);
+
             window.location.reload();
           }
        }); 
@@ -239,39 +254,52 @@ $(document).on('click', '.ast_remove_item', function(){
     }
 }); 
  
-  
 
+function loadintocart()
+{
+
+      $.ajax({
+        url:"<?php echo base_url(); ?>front/add",
+        method:"POST",
+        data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
+        success:function(data)
+        {
+         alert("Product Added into Cart");
+         $('#cart_details').html(data);
+         $('#' + product_id).val('');
+
+        }
+       });
  
-//     alert('sdfgfg');
+};
 
-//     var form_data = {
-//         first_name: $('#first_name').val(),
-//         last_name: $('#last_name').val()
-//         email: $('#email').val(),
-//         password : $('#password').val(),
-//         mobile : $('#mobile').val(),
-//         gender : $('#gender').val()
-            
-//     };
-//     $.ajax({
-//         url: "<?php //echo site_url('contact/submit'); ?>",
-//         type: 'POST',
-//         data: form_data,
-//         success: function(msg) {
-//             if (msg == "no")
-//             {   
-//                 $('#contact_form').append(msg);
-//             }
-//             if (msg == "yes")
-//             {   
-//                 $('#contact_form').append(msg);
-//             }               
+function removeitem($id)
+{
+  var row_id = $id;//$(this).attr("id");
+   alert(row_id);
+    if(confirm("Are you sure you want to remove this?"))
+    {
+       $.ajax
+       ({
+          url:"<?php echo base_url(); ?>front/remove",
+          method:"POST",
+          data:{row_id:row_id},
+          success:function(data)
+          {
+            //alert(data);
+            alert("Product removed from Cart");
 
-//         }
-//     });
+            $('#cart_details').html(data);
+          }
+       }); 
+    }
+    else
+    {
+       return false;
+    }
+}
 
-//     return false;
-// });
+
  
 
 </script>
