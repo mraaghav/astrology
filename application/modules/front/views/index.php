@@ -55,7 +55,7 @@
             </div>
             <div class="col-lg-5 col-md-5 col-sm-5 col-xs-12 col-lg-push-7 col-md-push-7 col-sm-push-7 col-xs-push-0">
                 <div class="ast_about_info_img">
-                    <img src="<?php echo base_url('asset/front/images/content/about.png')?>" alt="About">
+                    <img src="<?php echo base_url('asset/front/images/content/about.png');?>" alt="About">
                 </div>
             </div>
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 col-lg-pull-5 col-md-pull-5 col-sm-pull-5 col-xs-pull-0">
@@ -83,7 +83,7 @@
             <div class="ast_whywe_info">
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_1.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_1.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>90+ Expert Astrologers</p>
                         </div>
@@ -91,7 +91,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_2.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_2.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>24x7, 365 Days Availability</p>
                         </div>
@@ -99,7 +99,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_3.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_3.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>Instant Access Worldwide</p>
                         </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_4.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_4.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>Accurate Remedial Solutions</p>
                         </div>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_5.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_5.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>Privacy Guaranteed</p>
                         </div>
@@ -123,7 +123,7 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                     <div class="ast_whywe_info_box">
-                        <span><img src="<?php echo base_url('asset/front/images/content/ww_6.png')?>" alt=""></span>
+                        <span><img src="<?php echo base_url('asset/front/images/content/ww_6.png');?>" alt=""></span>
                         <div class="ast_whywe_info_box_info">
                             <p>Trusted by million clients</p>
                         </div>
@@ -159,224 +159,49 @@
                         <h3>Your Daily Horoscope</h3>
                         <p>Prepare yourself for all the goodies coming your way today, and also brace up for the not-so-good things. Find out what's in store for you today</p>
                     </div>
-                    <?php 
-                    //echo "pre";print_r($horoscopes); die;
-                    foreach ($horoscopes as $key => $horoscope) {?>
-                       <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                        <?php
+                        foreach ($horoscopes as $key => $horoscope) {
+                        ?>
+                      <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/' . $horoscope['image']);?>"></a>
+                            <h4 style="text-align:center"><?php echo $horoscope['horoscope_name'];?></h4>
                         </div>
-                    <?php } ?>
-                    <!-- <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/taurus.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/gemini.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/cancer.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/leo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/virgo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/libra.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/scorpio.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/sagittarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/capricorn.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aquarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
-                        </div>
-                    </div> -->
+                    <?php }?>
                 </div>
                 <div id="menu1" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Weekly Horoscope</h3>
                         <p>Getting the jitters about finding out how the week will play out for you? Get our weekly horoscope. Follow it, and feel relaxed</p>
                     </div>
-                    <?php 
-                    //echo "pre";print_r($horoscopes); die;
-                    foreach ($horoscopes as $key => $horoscope) {?>
-                       <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                    <?php foreach ($horoscopes as $key => $horoscope) {?>
+                      <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/' . $horoscope['image']);?>"></a>
+                            <h4 style="text-align:center"><?php echo $horoscope['horoscope_name'];?></h4>
                         </div>
-                    <?php } ?>
-                    <!-- <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/taurus.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/gemini.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/cancer.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/leo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/virgo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/libra.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/scorpio.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/sagittarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/capricorn.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aquarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
-                        </div>
-                    </div> -->
-                </div>
+                    <?php }?>                </div>
                 <div id="menu2" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Monthly Horoscope</h3>
                         <p>Get a sneak peek at your fortune in the month ahead. You'll get all the tips you want in our monthly horoscopes</p>
                     </div>
-                    <?php 
-                    //echo "pre";print_r($horoscopes); die;
-                    foreach ($horoscopes as $key => $horoscope) {?>
-                       <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                    <?php foreach ($horoscopes as $key => $horoscope) {?>
+                      <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/' . $horoscope['image']);?>"></a>
+                            <h4 style="text-align:center"><?php echo $horoscope['horoscope_name'];?></h4>
                         </div>
-                    <?php } ?>
-                    <!-- <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/taurus.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/gemini.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/cancer.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/leo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/virgo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/libra.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/scorpio.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/sagittarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/capricorn.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aquarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
-                        </div>
-                    </div> -->
+                    <?php }?>
                 </div>
                 <div id="menu3" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Yearly Horoscope</h3>
                         <p>Find out the high and low phases for you in the year ahead, and make your plans accordingly. Take precautionary measures for the negative phases, and make the best of the good times!</p>
                     </div>
-                    <?php 
-                    //echo "pre";print_r($horoscopes); die;
-                    foreach ($horoscopes as $key => $horoscope) {?>
-                       <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                    <?php foreach ($horoscopes as $key => $horoscope) {?>
+                      <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/' . $horoscope['image']);?>"></a>
+                            <h4 style="text-align:center"><?php echo $horoscope['horoscope_name'];?></h4>
                         </div>
-                    <?php } ?>
-                    <!-- <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/taurus.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/gemini.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/cancer.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/leo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/virgo.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/libra.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/scorpio.png')?>"></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/sagittarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/capricorn.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/aquarius.png')?>"></a>
-                        </div>
-                        <div class="col-xs-6 col-sm-3">
-                            <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
-                        </div>
-                    </div> -->
+                    <?php  }?>
                 </div>
             </div>
         </div>
@@ -402,46 +227,20 @@
                         <form class="">
                             <div class="col-xs-12 form-group">
                                 <label>Name</label>
-                                <input type="text" name="" placeholder="Enter Name" required="" class="form-control">
+                                <input type="text" name="male_name" placeholder="Enter Name" required="" class="form-control">
                             </div>
                             <div class="col-xs-12 form-group">
                                 <label>Place of Birth</label>
-                                <input type="text" name="" placeholder="Enter Place of Birth" required="" class="form-control">
+                                <input type="text" name="male_place_of_birth" placeholder="Enter Place of Birth" required="" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="" for="date">Date</label>
-                                <input class="form-control" id="date1" name="date" placeholder="MM/DD/YYY" type="text" />
+                                <input type="text" name="male_date_of_birth" id="male_date_of_birth" class="form-control date" autocomplete="off" readonly="readonly" placeholder="Start Date">
                             </div>
                             <div class="col-xs-12 form-group">
                                 <label>Time of Birth</label>
                                 <div class="">
-                                    <select>
-                                        <option>Hr</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <select>
-                                        <option>Min</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <select>
-                                        <option>Sec</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
+                                    <input type="text" id="male_birth_time" name="male_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="Start Time">
                                 </div>
                             </div>
                             <div class="col-xs-12">
@@ -458,50 +257,20 @@
                         <form class="">
                             <div class="col-xs-12 form-group">
                                 <label>Name</label>
-                                <input type="text" name="" placeholder="Enter Name" required="" class="form-control">
+                                <input type="text" name="female_name" placeholder="Enter Name" required="" class="form-control">
                             </div>
-                            <!-- <div class="col-xs-12 form-group">
-                                <label>Country</label>
-                                <input type="text" name="" placeholder="Enter Country" required="" class="form-control">
-                            </div> -->
                             <div class="col-xs-12 form-group">
                                 <label>Place of Birth</label>
-                                <input type="text" name="" placeholder="Enter Place of Birth" required="" class="form-control">
+                                <input type="text" name="female_place_of_birth" placeholder="Enter Place of Birth" required="" class="form-control">
                             </div>
                             <div class="col-md-12 form-group">
                                 <label class="" for="date">Date</label>
-                                <input class="form-control" id="date" name="date" placeholder="MM/DD/YYY" type="text" />
+                                <input type="text" name="female_birth_date" id="female_birth_date" class="form-control date" autocomplete="off" readonly="readonly" placeholder="Start Date">
                             </div>
                             <div class="col-xs-12 form-group">
                                 <label>Time of Birth</label>
                                 <div class="">
-                                    <select>
-                                        <option>Hr</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <select>
-                                        <option>Min</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
-                                    <select>
-                                        <option>Sec</option>
-                                        <option>0</option>
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                        <option>5</option>
-                                    </select>
+                                    <input type="text" id="female_birth_time" name="female_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="Start Time">
                                 </div>
                             </div>
                             <div class="col-xs-12">

@@ -12,4 +12,9 @@ class Common_model extends CI_Model
         return $query->result();
     }
 
+    function get_all_product(){
+        $result=$this->db->get('products');
+        return $result;
+    }
+
 }

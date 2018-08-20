@@ -20,12 +20,13 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/owl.theme.default.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/magnific-popup.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/style.css')?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/timepicker.css')?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url('asset/front/images/header/favicon.png')?>">
     <style type="text/css">
-    	.red{
-    		color:red;
-    	}
+    	.red{color:red;}
     </style>
 </head>
 
@@ -63,37 +64,7 @@
                             <li class="ast_cart">
                                 <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
                                 <div class="ast_cart_box">
-                                    <div class="ast_cart_list">
-                                        <ul>
-                                            <li>
-                                                <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
-                                                </div>
-                                                <div class="ast_cart_info">
-                                                    <a href="#">Yellow Sapphire</a>
-                                                    <p>1 X $20.00</p>
-                                                    <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
-                                                </div>
-                                                <div class="ast_cart_info">
-                                                    <a href="#">yantra</a>
-                                                    <p>1 X $10.00</p>
-                                                    <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="ast_cart_total">
-                                        <p>total<span>$30.00</span></p>
-                                    </div>
-                                    <div class="ast_cart_btn">
-                                        <button type="button">view cart</button>
-                                        <button type="button">checkout</button>
-                                    </div>
+                                    <!-- cart section -->
                                 </div>
                             </li>
                         </ul>
