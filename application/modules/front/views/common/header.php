@@ -63,10 +63,12 @@
                                 </div>
                             </li>
                             <li class="ast_cart">
+
+
                                 <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
-                                <div id="customcart">
-                                    <div class="ast_cart_box">
-                                    </div>
+                                 <div id="customcart">
+                            
+                                 </div>
                             </li>
                         </ul>
                         

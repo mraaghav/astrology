@@ -1,4 +1,3 @@
-<!--Breadcrumb start-->
 <div class="ast_pagetitle">
     <div class="ast_img_overlay"></div>
     <div class="container">
@@ -51,17 +50,19 @@
                                     <p>$<?php echo number_format($product->price); ?></p>
                                     <div class="ast_info_bottom">
 
-                                        <a href="javascript:void(0)" class="ast_add_cart ast_btn add_cart" data-productid="<?php echo $product->p_id;?>" data-image="<?php echo $product->image; ?>">add to cart</a>
 
-                                        <!-- <input type="hidden" name="quantity" class="form-control quantity" id="<?php echo $product->p_id; ?>">
-                                        <a href="javascript:void(0)" class="ast_add_cart ast_btn" data-id="<?php echo $product->p_id; ?>" data-image="<?php echo $product->name; ?>" data-price="<?php echo $product->price; ?>" data-image="<?php echo $product->image; ?>" >add to cart</a> -->
+                                        <input type="hidden" name="quantity" class="form-control quantity" id="<?php echo $product->p_id; ?>">
+                                        <a href="#" data-image="<?php echo $product->image; ?>" data-id="<?php echo $product->p_id; ?>" data-price="<?php echo $product->price;?>" data-name="<?php echo $product->name; ?>" class="ast_add_cart ast_btn"  >add to cart</a>
+
 
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+
                         <?php }?>
+
                     </div>
                 </div>
             </div>

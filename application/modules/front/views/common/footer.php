@@ -98,194 +98,209 @@
 </script>
 
 <script type="text/javascript">
-$(document).ready(function() {
-    $('#female_birth_time').timepicker({
-        timeFormat: 'h:mm:ss p',
-        interval: 1,
-        scrollbar: true
+    $(document).ready(function() {
+        $('#female_birth_time').timepicker({
+            timeFormat: 'h:mm:ss p',
+            interval: 1,
+            scrollbar: true
+        });
+        $('#male_birth_time').timepicker({
+            timeFormat: 'h:mm:ss p',
+            interval: 1,
+            scrollbar: true
+        });
+        var date_input = $('input[name="date"]'); 
+        var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
+        var options = {
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        };
+        date_input.datepicker(options);
+        $('#myCarousel').carousel({
+            interval: 5000
+        });
+        $('#carousel-text').html($('#slide-content-0').html());
+        $('[id^=carousel-selector-]').click(function() {
+            var id = this.id.substr(this.id.lastIndexOf("-") + 1);
+            var id = parseInt(id);
+            $('#myCarousel').carousel(id);
+        });
+        
+        $('#myCarousel').on('slid.bs.carousel', function(e) {
+            var id = $('.item.active').data('slide-number');
+            $('#carousel-text').html($('#slide-content-' + id).html());
+        });
+        $('#media').carousel({
+            pause: true,
+            interval: false,
+        });
     });
-    $('#male_birth_time').timepicker({
-        timeFormat: 'h:mm:ss p',
-        interval: 1,
-        scrollbar: true
-    });
-    var date_input = $('input[name="date"]'); //our date input has the name "date"
-    var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
-    var options = {
-        format: 'mm/dd/yyyy',
-        container: container,
-        todayHighlight: true,
-        autoclose: true,
-    };
-    date_input.datepicker(options);
-    
 
-});
-
-function isAlphaOrParen(str) {
-    return /^[a-zA-Z()]+$/.test(str);
-}
-
-function isEmail(email) {
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    return regex.test(email);
-}
-
-function validatePhone(txtPhone) {
-    var a = document.getElementById(txtPhone).value;
-    var filter = /[1-9]{1}[0-9]{9}/;
-    if (filter.test(a)) {
-        return true;
-    } else {
-        return false;
+    function isAlphaOrParen(str) {
+        return /^[a-zA-Z()]+$/.test(str);
     }
-}
- 
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function validatePhone(txtPhone) {
+        var a = document.getElementById(txtPhone).value;
+        var filter = /[1-9]{1}[0-9]{9}/;
+        if (filter.test(a)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     $('.add_cart').click(function() {            
-            var product_id    = $(this).data("productid");
-            var quantity      = $('#' + product_id).val();       
+        var product_id    = $(this).data("productid");            
+        var quantity      = $('#' + product_id).val();       
         $.ajax({                
             url: "<?php echo site_url('front/add_to_cart');?>",
             method: "POST",
-            data : {product_id: product_id,  quantity: quantity},
+            data: {
+                product_id: product_id,
+                quantity: quantity
+            },
             success: function(data) {                    
                 $('.ast_cart_box').html(data);                
             }            
         });        
     });                  
-    
     $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
-    
     $(document).on('click', '.romove_cart', function() {            
         var row_id = $(this).attr("id");            
         $.ajax({                
             url: "<?php echo site_url('front/delete_cart');?>",
-            method: "POST",
-            data: { row_id: row_id },
+                        method: "POST",
+                        data: {
+                row_id: row_id
+            },
             success: function(data) {                    
                 $('.ast_cart_box').html(data);                
             }            
         });        
     });
+
+    function isAlphaOrParen(str) {
+        return /^[a-zA-Z()]+$/.test(str);
+    }
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        return regex.test(email);
+    }
+
+    function validatePhone(txtPhone) {
+        var a = document.getElementById(txtPhone).value;
+        var filter = /[1-9]{1}[0-9]{9}/;
+        if (filter.test(a)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    $(".ast_add_cart").click(function() {
+        var product_id = $(this).data("id");
+        var product_price = $(this).data("price");
+        var product_name = $(this).data("name");
+        var product_image = $(this).data("image");
+        var quantity = 1; //$('#' + product_id).val();  
+        if (quantity != '' && quantity > 0) {
+            $.ajax({
+                url: "<?php echo base_url(); ?>front/add",
+                method: "POST",
+                data: {
+                    product_id: product_id,
+                    product_name: product_name,
+                    product_price: product_price,
+                    product_image: product_image,
+                    quantity: quantity
+                },
+                success: function(data) {
+                    //alert(data);
+                    alert("Product Added into Cart");
+                    $('#cart_details').html(data);
+                    $('#' + product_id).val('');
+                }
+            });
+        } else {
+            alert("Please Enter quantity");
+        }
+    });
 /* 
-**  Function For Load into Cart after add into cart 
-*/
-$(".carticon").click(function(){
-    $.ajax({
-        url:"<?php echo base_url(); ?>front/viewcart",
-        method:"GET",
-        success:function(data)
-        {
-          alert(data);
-          $('#customcart').html(data);
+ **  Function For Load into Cart after add into cart 
+ */
+    $(".carticon").click(function() {
+        $.ajax({
+            url: "<?php echo base_url(); ?>front/viewcart",
+            method: "GET",
+            success: function(data) {
+                //alert(data);
+                $('#customcart').html(data);
+            }
+        });
+    });
+    $(document).on('click', '.ast_remove_item', function() {
+        var row_id = $(this).attr("id");
+        if (confirm("Are you sure you want to remove this?")) {
+            $.ajax({
+                url: "<?php echo base_url(); ?>front/remove",
+                method: "POST",
+                data: {
+                    row_id: row_id
+                },
+                success: function(data) {
+                    window.location.reload();
+                }
+            });
+        } else {
+            return false;
         }
-       });
- 
-});
+    });
 
+    function loadintocart() {
+        $.ajax({
+            url: "<?php echo base_url(); ?>front/add",
+            method: "POST",
+            data: {
+                product_id: product_id,
+                product_name: product_name,
+                product_price: product_price,
+                quantity: quantity
+            },
+            success: function(data) {
+                alert("Product Added into Cart");
+                $('#cart_details').html(data);
+                $('#' + product_id).val('');
+            }
+        });
+    };
 
-
-$(document).on('click', '.ast_remove_item', function(){
-   
-   var row_id = $(this).attr("id");
-   if(confirm("Are you sure you want to remove this?"))
-    {
-       $.ajax
-       ({
-          url:"<?php echo base_url(); ?>front/remove",
-          method:"POST",
-          data:{row_id:row_id},
-          success:function(data)
-          {
-            window.location.reload();
-          }
-       }); 
-    }
-    else
-    {
-       return false;
-    }
-}); 
- 
-function loadintocart()
-{
-
-      $.ajax({
-        url:"<?php echo base_url(); ?>front/add",
-        method:"POST",
-        data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
-        success:function(data)
-        {
-         alert("Product Added into Cart");
-         $('#cart_details').html(data);
-         $('#' + product_id).val('');
-
+    function removeitem($id) {
+        var row_id = $id;
+        alert(row_id);
+        if (confirm("Are you sure you want to remove this?")) {
+            $.ajax({
+                url: "<?php echo base_url(); ?>front/remove",
+                method: "POST",
+                data: {
+                    row_id: row_id
+                },
+                success: function(data) {
+                    $('#cart_details').html(data);
+                }
+            });
+        } else {
+            return false;
         }
-       });
- 
-};
-
-function removeitem($id)
-{
-  var row_id = $id;//$(this).attr("id");
-   alert(row_id);
-    if(confirm("Are you sure you want to remove this?"))
-    {
-       $.ajax
-       ({
-          url:"<?php echo base_url(); ?>front/remove",
-          method:"POST",
-          data:{row_id:row_id},
-          success:function(data)
-          {
-            //alert(data);
-            alert("Product removed from Cart");
-
-            $('#cart_details').html(data);
-          }
-       }); 
     }
-    else
-    {
-       return false;
-    }
-}
+       
 
- 
-
-</script>
-<script type="text/javascript">
-    $(document).ready(function() {
-  $('#media').carousel({
-    pause: true,
-    interval: false,
-  });
-});
-</script>
-
-<script type="text/javascript">
-      jQuery(document).ready(function($) {
- 
-        $('#myCarousel').carousel({
-                interval: 5000
-        });
- 
-        $('#carousel-text').html($('#slide-content-0').html());
- 
-        //Handles the carousel thumbnails
-       $('[id^=carousel-selector-]').click( function(){
-            var id = this.id.substr(this.id.lastIndexOf("-") + 1);
-            var id = parseInt(id);
-            $('#myCarousel').carousel(id);
-        });
- 
- 
-        // When the carousel slides, auto update the text
-        $('#myCarousel').on('slid.bs.carousel', function (e) {
-                 var id = $('.item.active').data('slide-number');
-                $('#carousel-text').html($('#slide-content-'+id).html());
-        });
-});
 </script>
 
 </body>
