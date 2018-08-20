@@ -249,19 +249,19 @@ class Front extends CI_Controller
    /*
    **  Add into Cart using Ajax post request
    */
-   public function add()
-     {
+   // public function add()
+   //   {
 
-       //$this->load->library("cart");
-       $data = array(
-           "id"  => $_POST["product_id"],
-           "name"  => $_POST["product_name"],
-           "qty"  => $_POST["quantity"],
-           "price"  => $_POST["product_price"],
-           "image"  => $_POST["product_image"],
-       );
-       $this->cart->insert($data); //return rowid 
-    }
+   //     //$this->load->library("cart");
+   //     $data = array(
+   //         "id"  => $_POST["product_id"],
+   //         "name"  => $_POST["product_name"],
+   //         "qty"  => $_POST["quantity"],
+   //         "price"  => $_POST["product_price"],
+   //         "image"  => $_POST["product_image"],
+   //     );
+   //     $this->cart->insert($data); //return rowid 
+   //  }
     public function viewcart()
     {
          //print_r($this->cart->contents()); die;
@@ -402,7 +402,8 @@ class Front extends CI_Controller
             'id' => $this->input->post('product_id'),
             'name' => $products[0]->name,
             'price' => $products[0]->price,
-            'qty' =>  $quantity
+            'qty' =>  $quantity,
+            'image'=>$this->input->post('image')
         );
         $this->cart->insert($data);
         echo $this->show_cart();
