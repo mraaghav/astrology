@@ -261,28 +261,47 @@ class Front extends CI_Controller
             echo '1';
         }
     }
-
  
    /*
    **  Add into Cart using Ajax post request
    */
    public function add()
      {
+       //$this->cart->product_options($rowid);
+       $id = $_POST['product_id'];
+       $qty  = $_POST["quantity"];
+       $cart = $this->cart->contents();
+       $exists = false;             //lets say that the new item we're adding is not in the cart
+       $rowid = '';
+       foreach($cart as $item){
+           if($item['id'] == $id)
+           {
+                $exists = true;
+                $rowid = $item['rowid'];
+                $qty = $item['qty'] + $qty;
+           }
+       }
 
        //$this->load->library("cart");
        $data = array(
+           "rowid" => $rowid,
            "id"  => $_POST["product_id"],
            "name"  => $_POST["product_name"],
-           "qty"  => $_POST["quantity"],
+           "qty"  => $qty,//$_POST["quantity"],
            "price"  => $_POST["product_price"],
            "image"  => $_POST["product_image"],
        );
-       $this->cart->insert($data); //return rowid 
+       
+       if($exists)
+        {
+           $this->cart->update($data);
+        }
+        else
+           $this->cart->insert($data); //return rowid 
     }
     public function viewcart()
     {
-         //print_r($this->cart->contents()); die;
-  
+       //print_r($this->cart->contents()); die;
        if(count($this->cart->contents())>0)
        {
             $output ='<div class="ast_cart_box">
@@ -293,7 +312,7 @@ class Front extends CI_Controller
             foreach($this->cart->contents() as $items)
             {    
                $count++;
-               $url = base_url("asset/front/images/content/Products/").$items['image'];
+               $url = base_url("asset/uploads/").$items['image'];
                $cartitemid= $items['rowid'];
                $output .='<li>
                             <div class="ast_cart_img">
@@ -301,13 +320,13 @@ class Front extends CI_Controller
                             </div>
                             <div class="ast_cart_info">
                                 <a href="#">'.$items["name"].'</a>
-                                <p>1 X $'.$items["price"].'</p>
+                                <p>'.$items['qty'].' X $'.$items["price"].'</p>
                                 <a href="javascript:void(0);" id="'.$items['rowid'].'" class="ast_cart_remove ast_remove_item" 
                                 ><i class="fa fa-trash"></i></a>
                             </div>
                           </li>';
 
-               $total+=   $items["price"];                              
+               $total+=  $items['qty']* $items["price"];                              
              }       
             $output .= '</ul>
                </div>
@@ -325,6 +344,71 @@ class Front extends CI_Controller
 
        
     }
+
+
+ 
+   /*
+   **  Add into Cart using Ajax post request
+   */
+   // public function add()
+   //   {
+
+   //     //$this->load->library("cart");
+   //     $data = array(
+   //         "id"  => $_POST["product_id"],
+   //         "name"  => $_POST["product_name"],
+   //         "qty"  => $_POST["quantity"],
+   //         "price"  => $_POST["product_price"],
+   //         "image"  => $_POST["product_image"],
+   //     );
+   //     $this->cart->insert($data); //return rowid 
+   //  }
+    // public function viewcart()
+    // {
+    //      //print_r($this->cart->contents()); die;
+  
+    //    if(count($this->cart->contents())>0)
+    //    {
+    //         $output ='<div class="ast_cart_box">
+    //               <div class="ast_cart_list">
+    //              <ul>';
+    //         $count = 0;
+    //         $total= 0;
+    //         foreach($this->cart->contents() as $items)
+    //         {    
+    //            $count++;
+    //            $url = base_url("asset/front/images/content/Products/").$items['image'];
+    //            $cartitemid= $items['rowid'];
+    //            $output .='<li>
+    //                         <div class="ast_cart_img">
+    //                  <img src="'.$url.'" class="img-responsive">
+    //                         </div>
+    //                         <div class="ast_cart_info">
+    //                             <a href="#">'.$items["name"].'</a>
+    //                             <p>1 X $'.$items["price"].'</p>
+    //                             <a href="javascript:void(0);" id="'.$items['rowid'].'" class="ast_cart_remove ast_remove_item" 
+    //                             ><i class="fa fa-trash"></i></a>
+    //                         </div>
+    //                       </li>';
+
+    //            $total+=   $items["price"];                              
+    //          }       
+    //         $output .= '</ul>
+    //            </div>
+    //            <div class="ast_cart_total">
+    //                 <p>total<span>$'.$total.'</span></p>
+    //            </div>
+    //            <div class="ast_cart_btn">
+    //                 <button type="button">view cart</button>
+    //                 <button type="button">checkout</button>
+    //            </div>
+    //         </div>';
+
+    //       echo $output;
+    //    }
+
+       
+    // }
 
 /*
 **  Remove Cart item by rowid
@@ -419,7 +503,8 @@ class Front extends CI_Controller
             'id' => $this->input->post('product_id'),
             'name' => $products[0]->name,
             'price' => $products[0]->price,
-            'qty' =>  $quantity
+            'qty' =>  $quantity,
+            'image'=>$this->input->post('image')
         );
         $this->cart->insert($data);
         echo $this->show_cart();
@@ -450,7 +535,5 @@ class Front extends CI_Controller
         echo $this->show_cart();
     }
 }
-
-
 
 
