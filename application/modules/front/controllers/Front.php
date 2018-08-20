@@ -10,12 +10,29 @@ class Front extends CI_Controller
     public function index($msg = NULL)
     {
         $data['horoscopes'] = $this->model->getAll('horoscope', '');
+        $data['setting'] = $this->model->getAll('site_setting', '');
+         $where    = array(
+            'id' =>  1
+        );
+        $data['pages'] = $this->model->getsingle('pages', $where);
         $data['body']       = 'index';
         $this->controller->load_view($data);
         
     }
+    // public function header($msg = NULL)
+    // {
+    //     $data['setting'] = $this->model->getAll('site_setting', '');
+    //     $data['body']    = 'common/header';
+    //     $this->controller->load_view($data);
+    // }
+
     public function about()
     {
+        $data['setting'] = $this->model->getAll('site_setting', '');
+         $where    = array(
+            'id' =>  2
+        );
+        $data['pages'] = $this->model->getsingle('pages', $where);
         $data['body'] = 'about';
         $this->controller->load_view($data);
     }

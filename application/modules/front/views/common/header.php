@@ -32,6 +32,8 @@
 </head>
 
 <body>
+    <?php //echo "<pre>";print_r($setting); 
+    //echo $setting[0]['id']; ?>
     <!-- Header Start -->
     <div class="ast_top_header">
         <div class="container">
@@ -39,8 +41,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="ast_contact_details">
                         <ul>
-                            <li><i class="fa fa-phone" aria-hidden="true"></i> +1800 326 3264</li>
-                            <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> support@website.com</a></li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i> <?php echo $setting[0]['site_phone']; ?></li>
+                            <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i><?php echo $setting[0]['site_mail']; ?></a></li>
                         </ul>
                     </div>
                     <div class="ast_autho_wrapper">
@@ -118,7 +120,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="ast_logo">
-                        <a href="index.html"><img src="<?php echo base_url('asset/front/images/header/logo.png')?>" alt="Logo" title="Logo"></a>
+                        <a href="index.html"><img src="<?php echo base_url('asset/uploads/'.$setting[0]['site_logo'])?>" alt="Logo" title="Logo"></a>
                         <button class="ast_menu_btn"><i class="fa fa-bars" aria-hidden="true"></i></button>
                     </div>
                 </div>

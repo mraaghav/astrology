@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-xs-offset-0">
                 <div class="ast_footer_info">
-                    <img src="<?php echo base_url('asset/front/images/header/logo.png')?>" alt="Logo">
+                    <img src="<?php echo base_url('asset/uploads/'.$setting[0]['site_logo'])?>" alt="Logo">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['facebook_url']; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['google_url']; ?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['pinterest_url']; ?>"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['linkedin_url']; ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['twitter_url']; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -61,10 +61,10 @@
                             <li><i class="fa fa-home" aria-hidden="true"></i>
                                 <p>2794, Hayhurst Lane Bloomfield Township, MI 48302</p>
                             </li>
-                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#">support@website.com</a><a href="#">info@website.com</a></li>
+                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#"><?php echo $setting[0]['site_mail']; ?></a><a href="#"><?php echo $setting[0]['site_mail']; ?></a></li>
                             <li><i class="fa fa-phone" aria-hidden="true"></i>
-                                <p>+1800 326 3264</p>
-                                <p>+1800 326 3234</p>
+                                <p><?php echo $setting[0]['site_phone']; ?></p>
+                                <p><?php echo $setting[0]['site_alternative_phone']; ?></p>
                             </li>
                         </ul>
                     </div>

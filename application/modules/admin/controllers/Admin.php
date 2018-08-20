@@ -550,12 +550,16 @@ class Admin extends CI_Controller
             } else {
                 $page_name        = $this->input->post('page_name');
                 $title            = $this->input->post('page_title');
+                $short_description            = $this->input->post('short_description');
+                $brief_description            = $this->input->post('brief_description');
                 $meta_title       = $this->input->post('meta_title');
                 $meta_keywords    = $this->input->post('meta_keywords');
                 $meta_description = $this->input->post('meta_description');
                 $data             = array(
                     'page_name' => $page_name,
                     'page_title' => $title,
+                    'short_description' => $short_description,
+                    'brief_description' => $brief_description,
                     'meta_title' => $meta_title,
                     'meta_keywords' => $meta_keywords,
                     'meta_description' => $meta_description,
@@ -661,62 +665,98 @@ class Admin extends CI_Controller
             redirect('admin/index');
         }
     }
-    public function settings()
+    public function settings($id = null)
     {
         if ($this->controller->checkSession()) {
             
-            $this->form_validation->set_rules('horoscope_name', 'Horoscope Name', 'trim|required|min_length[2]');
-            $this->form_validation->set_rules('short_desc', 'Short Description', 'trim|required|min_length[2]');
-            $this->form_validation->set_rules('full_desc', 'Full Description', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('site_mail', 'Site Mail', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('site_phone', 'Site Phone', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('a_site_phone', 'Alternate Site Phone', 'trim|required|min_length[2]');
+            // $this->form_validation->set_rules('facebook_page_url','Facebook Page Url','trim|required||min_length[2]');
+            // $this->form_validation->set_rules('linked_page_url','Linked Page Url','trim|required||min_length[2]');
 
+            // $this->form_validation->set_rules('google_page_url','Google+ Page Url','trim|required||min_length[2]');
+
+            // $this->form_validation->set_rules('pinterest_page_url','Pinterest Page Url','trim|required||min_length[2]');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
                 if (!empty($id)) {
                     $where              = array(
                         'id' => $id
                     );
-                    $data['horoscopes'] = $this->model->getAllwhere('horoscope', $where);
+                    $data['settings'] = $this->model->getAllwhere('site_setting', $where);
                 }
                 $data['body'] = 'settings';
                 $this->controller->load_view($data);
             } else {
-                $horoscope_name = $this->input->post('horoscope_name');
-                $short_desc     = $this->input->post('short_desc');
-                $full_desc      = $this->input->post('full_desc');
+                $site_mail = $this->input->post('site_mail');
+                $site_phone     = $this->input->post('site_phone');
+                $a_site_phone      = $this->input->post('a_site_phone');
+                $facebook_page_url = $this->input->post('facebook_page_url');
+                $linked_page_url  =  $this->input->post('linked_page_url');
+                $google_page_url  =  $this->input->post('google_page_url');
+                $pinterest_page_url =$this->input->post('pinterest_page_url');
+                $twitter_page_url = $this->input->post('twitter_page_url'); 
                 $data           = array(
-                    'horoscope_name' => $horoscope_name,
-                    'short_desc' => $short_desc,
-                    'brief_desc' => $full_desc,
+                    'site_mail' => $site_mail,
+                    'site_phone' => $site_phone,
+                    'site_alternative_phone' => $a_site_phone,
+                    'facebook_url' => $facebook_page_url,
+                    'linkedin_url'  =>  $linked_page_url,
+                    'google_url'   => $google_page_url,
+                    'pinterest_url' =>$pinterest_page_url,
+                    'twitter_url'  => $twitter_page_url,
                     'is_active' => 1,
                     'created_at' => date('Y-m-d H:i:s')
                 );
+
+                //echo "<pre>";print_r($_FILES); die;
                 if (!empty($id)) {
                     $where = array(
                         'id' => $id
                     );
+                    // if (!empty($_FILES['site_logo']['name'][0])) {
+                    // $images = $this->file_upload('site_logo');
+                  
+                    // $data   = array(
+                    //     'site_logo' => $images['site_logo'][0]['site_logo']
+                    // );
+                
+                    // }
                     unset($data['created_at']);
-                    $result  = $this->model->updateFields('settings', $data, $where);
+                    $result  = $this->model->updateFields('site_setting', $data, $where);
                     $last_id = $id;
                 } else {
-                    $last_id = $this->model->insertData('settings', $data);
+                    $last_id = $this->model->insertData('site_setting', $data);
                 }
-                if (!empty($_FILES['horoscope_img']['name'][0])) {
-                    $images = $this->file_upload('horoscope_img');
+                if (!empty($_FILES['site_logo']['name'][0])) {
+                    $images = $this->file_upload('site_logo');
                     $where  = array(
                         'id' => $last_id
                     );
                     $data   = array(
-                        'image' => $images['image'][0]['image']
+                        'site_logo' => $images['image'][0]['image']
                     );
-                    $this->model->updateFields('settings', $data, $where);
+    
+                    $this->model->updateFields('site_setting', $data, $where);
                 }
                 if ($last_id) {
                     $this->session->set_flashdata('info_message', 'Page Successfully Updated!!!');
                 } else {
                     $this->session->set_flashdata('error_msg', "Something Went Wrong");
                 }
-                // /redirect('/admin/list_horoscopes', 'refresh');
+                redirect('index.php/admin/view_settings', 'refresh');
             }
+        } else {
+            redirect('admin/index');
+        }
+    }
+    public function view_settings()
+    {
+        if ($this->controller->checkSession()) {
+            $data['settings'] = $this->model->getAllwhere('site_setting');
+            $data['body']       = 'view_settings';
+            $this->controller->load_view($data);
         } else {
             redirect('admin/index');
         }

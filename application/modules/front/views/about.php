@@ -41,8 +41,9 @@
             <div class="col-lg-7 col-md-7 col-sm-7 col-xs-12 col-lg-pull-5 col-md-pull-5 col-sm-pull-5 col-xs-pull-0">
                 <div class="ast_about_info">
                     <h4>know about astrology</h4>
-                    <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
-                    <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.The point of using Lorem Ipsum is that it has a more-or less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English will uncover many web sites still in their infancy.The point of using Lorem Ipsum is that it has a more-or less normal distribution.</p>
+                    <p><?php echo $pages->brief_description; ?></p>
+                    <!-- <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English.</p>
+                    <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy.The point of using Lorem Ipsum is that it has a more-or less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English will uncover many web sites still in their infancy.The point of using Lorem Ipsum is that it has a more-or less normal distribution.</p> -->
                 </div>
             </div>
         </div>
@@ -168,4 +169,4 @@
         </div>
     </div>
 </div>
-<!-- Testimonials End-->
+<!-- Testimonials End

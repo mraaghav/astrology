@@ -41,6 +41,14 @@
                                     <div class="col-lg-6"> <input class="form-control" type="text" name="page_title" id="page_title" placeholder="Page Title" autocomplete="off" required="required" value="<?php if(!empty($page[0]->page_title)){ echo $page[0]->page_title;}else{ echo set_value('page_title');} ?>"> <span class="red">
                                             <?php echo form_error('page_title'); ?></span> </div>
                                 </div>
+                                <div class="form-group"> <label class="col-md-2">Short Description  </label>
+                                    <div class="col-lg-6"> <input class="form-control" type="text" name="short_description" id="short_description" placeholder="Short Description" autocomplete="off" required="required" value="<?php if(!empty($page[0]->short_description)){ echo $page[0]->short_description;}else{ echo set_value('short_description');} ?>"> <span class="red">
+                                            <?php echo form_error('short_description'); ?></span> </div>
+                                </div>
+                                <div class="form-group"> <label class="col-md-2">Breif Description  </label>
+                                    <div class="col-lg-6"> <input class="form-control" type="text" name="Brief Bescription" id="brief_description" placeholder="brief_descriptione" autocomplete="off" required="required" value="<?php if(!empty($page[0]->brief_description)){ echo $page[0]->brief_description;}else{ echo set_value('brief_description');} ?>"> <span class="red">
+                                            <?php echo form_error('brief_description'); ?></span> </div>
+                                </div>
                                 <div class="form-group"> <label class="col-md-2">Meta Title  </label>
                                     <div class="col-lg-6"> <input class="form-control" type="text" name="meta_title" id="meta_title" placeholder="Meta Title" autocomplete="off" required="required" value="<?php if(!empty($page[0]->meta_title)){ echo $page[0]->meta_title;}else{ echo set_value('meta_title');} ?>"> <span class="red"><?php echo form_error('meta_title'); ?></span> </div>
                                 </div>

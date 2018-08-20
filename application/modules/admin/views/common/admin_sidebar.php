@@ -84,11 +84,11 @@
                      <li>
                         <a href="#"><i class="fa fa-star fa-fw" style="font-size: 21px"></i> Site Setting<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
+                            <!-- <li>
+                                <a href="<?php //echo base_url('admin/settings')?>">Add Setting</a>
+                            </li> -->
                             <li>
-                                <a href="<?php echo base_url('admin/settings')?>">Add Setting</a>
-                            </li>
-                            <li>
-                                <a href="<?php echo base_url('admin/list_settings/')?>">View Setting</a>
+                                <a href="<?php echo base_url('admin/view_settings/')?>">View Setting</a>
                             </li>
                         </ul>
                     </li>
