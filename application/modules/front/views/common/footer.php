@@ -4,13 +4,13 @@
         <div class="row">
             <div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-xs-offset-0">
                 <div class="ast_footer_info">
-                    <img src="<?php echo base_url('asset/front/images/header/logo.png')?>" alt="Logo">
+                    <img src="<?php echo base_url('asset/uploads/'.$setting[0]['site_logo'])?>" alt="Logo">
                     <ul>
-                        <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-skype" aria-hidden="true"></i></a></li>
-                        <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['facebook_url']; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['google_url']; ?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['pinterest_url']; ?>"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['linkedin_url']; ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['twitter_url']; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -45,10 +45,10 @@
                     <h4 class="widget-title">quick links</h4>
                     <div class="ast_sociallink">
                         <ul>
-                            <li><a href="about.html">about</a></li>
-                            <li><a href="shop.html">Shop</a></li>
-                            <li><a href="donate.html">Donate</a></li>
-                            <li><a href="contact.html">contact</a></li>
+                            <li><a href="<?php echo base_url('front/about')?>">about</a></li>
+                            <li><a href="<?php echo base_url('front/shop')?>">Shop</a></li>
+                            <li><a href="<?php echo base_url('front/donate')?>">Donate</a></li>
+                            <li><a href="<?php echo base_url('front/contact')?>">contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -61,10 +61,10 @@
                             <li><i class="fa fa-home" aria-hidden="true"></i>
                                 <p>2794, Hayhurst Lane Bloomfield Township, MI 48302</p>
                             </li>
-                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#">support@website.com</a><a href="#">info@website.com</a></li>
+                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#"><?php echo $setting[0]['site_mail']; ?></a><a href="#"><?php echo $setting[0]['site_mail']; ?></a></li>
                             <li><i class="fa fa-phone" aria-hidden="true"></i>
-                                <p>+1800 326 3264</p>
-                                <p>+1800 326 3234</p>
+                                <p><?php echo $setting[0]['site_phone']; ?></p>
+                                <p><?php echo $setting[0]['site_alternative_phone']; ?></p>
                             </li>
                         </ul>
                     </div>
@@ -80,20 +80,35 @@
 </div>
 <!-- Footer wrapper End-->
 <!--Main js file Style-->
-<script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/js/jquery.js')?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/bootstrap.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.magnific-popup.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/owl.carousel.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.countTo.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/jquery.appear.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/price_range_script.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/slick/jquery-migrate-1.2.1.min.js')?>"></script>
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/slick/slick.min.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
-<!--Main js file End-->
+<script type="text/javascript" src="<?php echo base_url('asset/js/timepicker.js')?>"></script>
+
+<script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js">
 </script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
-<script>
 
+<script type="text/javascript">
 $(document).ready(function() {
+    $('#female_birth_time').timepicker({
+        timeFormat: 'h:mm:ss p',
+        interval: 1,
+        scrollbar: true
+    });
+    $('#male_birth_time').timepicker({
+        timeFormat: 'h:mm:ss p',
+        interval: 1,
+        scrollbar: true
+    });
     var date_input = $('input[name="date"]'); //our date input has the name "date"
     var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
     var options = {
@@ -103,46 +118,36 @@ $(document).ready(function() {
         autoclose: true,
     };
     date_input.datepicker(options);
+    
+    $('.add_cart').click(function() {            
+        var product_id    = $(this).data("productid");
+            var product_name  = $(this).data("productname");
+            var product_price = $(this).data("productprice");
+            var quantity      = $('#' + product_id).val();       
+        $.ajax({                
+            url: "<?php echo site_url('front/add_to_cart');?>",
+            method: "POST",
+            data : {product_id: product_id, product_name: product_name, product_price: product_price, quantity: quantity},
+            success: function(data) {                    
+                $('.ast_cart_box').html(data);                
+            }            
+        });        
+    });                  
+    
+    $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
+    
+    $(document).on('click', '.romove_cart', function() {            
+        var row_id = $(this).attr("id");            
+        $.ajax({                
+            url: "<?php echo site_url('front/delete_cart');?>",
+            method: "POST",
+            data: { row_id: row_id },
+            success: function(data) {                    
+                $('.ast_cart_box').html(data);                
+            }            
+        });        
+    });
 });
-// $('#register_btn').click(function(e) {
-//     e.preventDefault();
-//     var first_name = $('#first_name').val();
-//     var last_name = $('#last_name').val();
-//     var email = $('#email').val();
-//     var password = $('#password').val();
-//     var gender = $('#gender').val();
-//     var mobile = $('#mobile').val();
-    
-//     if (isAlphaOrParen(first_name)) {
-//         return true;
-//     }else{
-//         $('#error_first_name').html('first name must be alphabetic');
-//         return false;
-//     }
-    
-//     if (isAlphaOrParen(last_name)) {
-//         return true;
-//     }else{
-//          $('#error_last_name').html('last name must be alphabetic');
-//         return false;
-//     }
-
-//     if (isEmail(email)) {
-//         return true;
-//     }else{
-//          $('#error_email').html('email must be valid format');
-//         return false;
-//     }
-
-//     if (validatePhone(mobile)) {
-//         return true;
-//     }else{
-//          $('#error_mobile').html('mobile must be numeric and 10 characters');
-//         return false;
-//     }
-
-
-// });
 
 function isAlphaOrParen(str) {
     return /^[a-zA-Z()]+$/.test(str);
@@ -162,38 +167,134 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
+// <<<<<<< HEAD
+// $(".date").datepicker({
+//     format: 'yyyy-mm-dd',
+//     startDate: '+0d',
+//     autoclose: true
+// });
+// =======
 // $('#register_btn').click(function() {
 
-//     alert('sdfgfg');
+ 
+$(".ast_add_cart").click(function(){
 
-//     var form_data = {
-//         first_name: $('#first_name').val(),
-//         last_name: $('#last_name').val()
-//         email: $('#email').val(),
-//         password : $('#password').val(),
-//         mobile : $('#mobile').val(),
-//         gender : $('#gender').val()
-            
-//     };
-//     $.ajax({
-//         url: "<?php echo site_url('contact/submit'); ?>",
-//         type: 'POST',
-//         data: form_data,
-//         success: function(msg) {
-//             if (msg == "no")
-//             {   
-//                 $('#contact_form').append(msg);
-//             }
-//             if (msg == "yes")
-//             {   
-//                 $('#contact_form').append(msg);
-//             }               
+     var product_id = $(this).data("id");
+     var product_price = $(this).data("price");
+     var product_name = $(this).data("name");
+     var product_image=  $(this).data("image");
+     var quantity = 1;//$('#' + product_id).val();  
+ 
+     if(quantity != '' && quantity > 0)
+      {
 
-//         }
-//     });
+       $.ajax({
+        url:"<?php echo base_url(); ?>front/add",
+        method:"POST",
+        data:{product_id:product_id, product_name:product_name, product_price:product_price, product_image:product_image, quantity:quantity},
+        success:function(data)
+        {
 
-//     return false;
-// });
+          alert("Product Added into Cart");
+         // $('#cart_details').html(data);
+          $('#' + product_id).val('');
+        }
+       });
+      }
+      else
+      {
+         alert("Please Enter quantity");
+      }
+
+});
+/* 
+**  Function For Load into Cart after add into cart 
+*/
+$(".carticon").click(function(){
+ 
+   
+    $.ajax({
+        url:"<?php echo base_url(); ?>front/viewcart",
+        method:"GET",
+        success:function(data)
+        {
+          alert(data);
+          $('#customcart').html(data);
+        }
+       });
+ 
+});
+
+
+
+$(document).on('click', '.ast_remove_item', function(){
+   
+   var row_id = $(this).attr("id");
+   if(confirm("Are you sure you want to remove this?"))
+    {
+       $.ajax
+       ({
+          url:"<?php echo base_url(); ?>front/remove",
+          method:"POST",
+          data:{row_id:row_id},
+          success:function(data)
+          {
+            //alert("Product removed from Cart");
+            window.location.reload();
+          }
+       }); 
+    }
+    else
+    {
+       return false;
+    }
+}); 
+ 
+function loadintocart()
+{
+
+      $.ajax({
+        url:"<?php echo base_url(); ?>front/add",
+        method:"POST",
+        data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
+        success:function(data)
+        {
+         alert("Product Added into Cart");
+         $('#cart_details').html(data);
+         $('#' + product_id).val('');
+
+        }
+       });
+ 
+};
+
+function removeitem($id)
+{
+  var row_id = $id;//$(this).attr("id");
+   alert(row_id);
+    if(confirm("Are you sure you want to remove this?"))
+    {
+       $.ajax
+       ({
+          url:"<?php echo base_url(); ?>front/remove",
+          method:"POST",
+          data:{row_id:row_id},
+          success:function(data)
+          {
+            //alert(data);
+            alert("Product removed from Cart");
+
+            $('#cart_details').html(data);
+          }
+       }); 
+    }
+    else
+    {
+       return false;
+    }
+}
+
+ 
 
 </script>
 

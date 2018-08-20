@@ -27,7 +27,7 @@
         </div>
         <?php }?>
 
-        <form action="<?php echo base_url('admin/verifylogin')?>" method="post" class="login_form">
+        <form action="<?php echo base_url('index.php/admin/verifylogin')?>" method="post" class="login_form">
             <label for="name">Username:</label>
             <input type="name" id="username" name="username" autocomplete="off" required="required" placeholder="Username...">
             <label for="username">Password:</label>

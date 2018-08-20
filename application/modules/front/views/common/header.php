@@ -20,16 +20,19 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/owl.theme.default.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/magnific-popup.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/style.css')?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/timepicker.css')?>">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url('asset/front/images/header/favicon.png')?>">
     <style type="text/css">
-    	.red{
-    		color:red;
-    	}
+    	.red{color:red;}
     </style>
 </head>
 
 <body>
+    <?php //echo "<pre>";print_r($setting); 
+    //echo $setting[0]['id']; ?>
     <!-- Header Start -->
     <div class="ast_top_header">
         <div class="container">
@@ -37,8 +40,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="ast_contact_details">
                         <ul>
-                            <li><i class="fa fa-phone" aria-hidden="true"></i> +1800 326 3264</li>
-                            <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i> support@website.com</a></li>
+                            <li><i class="fa fa-phone" aria-hidden="true"></i> <?php echo $setting[0]['site_phone']; ?></li>
+                            <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i><?php echo $setting[0]['site_mail']; ?></a></li>
                         </ul>
                     </div>
                     <div class="ast_autho_wrapper">
@@ -61,13 +64,21 @@
                                 </div>
                             </li>
                             <li class="ast_cart">
-                                <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
+
+                               <!--  <a href="javascript:;"><i class="fa fa-shopping-cart"></i></a>
                                 <div class="ast_cart_box">
-                                    <div class="ast_cart_list">
+                                     cart section 
+                                </div> -->
+
+                                <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
+                                 <div id="customcart">
+                            <!-- <div class="ast_cart_box">
+                                   <div class="ast_cart_list">
                                         <ul>
+
                                             <li>
                                                 <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
+                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
                                                 </div>
                                                 <div class="ast_cart_info">
                                                     <a href="#">Yellow Sapphire</a>
@@ -77,7 +88,7 @@
                                             </li>
                                             <li>
                                                 <div class="ast_cart_img">
-                                                    <img src="<?php echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
+                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
                                                 </div>
                                                 <div class="ast_cart_info">
                                                     <a href="#">yantra</a>
@@ -85,6 +96,7 @@
                                                     <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
                                                 </div>
                                             </li>
+                                        
                                         </ul>
                                     </div>
                                     <div class="ast_cart_total">
@@ -94,7 +106,10 @@
                                         <button type="button">view cart</button>
                                         <button type="button">checkout</button>
                                     </div>
-                                </div>
+                                  
+                                </div> -->
+                              </div>
+
                             </li>
                         </ul>
                         <!---->
@@ -144,7 +159,7 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                     <div class="ast_logo">
-                        <a href="index.html"><img src="<?php echo base_url('asset/front/images/header/logo.png')?>" alt="Logo" title="Logo"></a>
+                        <a href="index.html"><img src="<?php echo base_url('asset/uploads/'.$setting[0]['site_logo'])?>" alt="Logo" title="Logo"></a>
                         <button class="ast_menu_btn"><i class="fa fa-bars" aria-hidden="true"></i></button>
                     </div>
                 </div>

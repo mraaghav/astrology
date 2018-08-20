@@ -42,8 +42,20 @@
                                             <?php echo form_error('price'); ?></span> </div>
                                 </div>
                                 <div class="form-group"> <label class="col-md-2">Short Description </label>
-                                    <div class="col-lg-6"> <textarea name="description" id="description" class="form-control" placeholder="Product Description"><?php if(!empty($products[0]->description)){ echo $products[0]->description;}else{ echo set_value('description');} ?></textarea><span class="red" id="new">
+                                    <div class="col-lg-6"> <textarea name="description" id="description" class="form-control" placeholder="Product Short Description"><?php if(!empty($products[0]->description)){ echo $products[0]->description;}else{ echo set_value('description');} ?></textarea><span class="red" id="new">
                                             <?php echo form_error('description'); ?></span> </div>
+                                </div>
+                                <div class="form-group"> <label class="col-md-2">Brief Description </label>
+                                    <div class="col-lg-6"> <textarea name="brief_description" id="brief_description" class="form-control" placeholder="Product Brief Description"><?php if(!empty($products[0]->brief_description)){ echo $products[0]->brief_description;}else{ echo set_value('brief_description');} ?></textarea><span class="red" id="new">
+                                            <?php echo form_error('brief_description'); ?></span> </div>
+                                </div>
+                                <div class="form-group"> <label class="col-md-2">Ref Number *</label>
+                                    <div class="col-lg-6"> <input class="form-control" type="text" placeholder="Ref Number" name="ref_no" autocomplete="off" id="ref_no" required="required" value="<?php if(!empty($products[0]->ref_no)){ echo $products[0]->ref_no;}else{ echo set_value('ref_no');} ?>"> <span class="red" id="old">
+                                            <?php echo form_error('ref_no'); ?></span> </div>
+                                </div>
+                                <div class="form-group"> <label class="col-md-2">Quantity *</label>
+                                    <div class="col-lg-6"> <input class="form-control" type="text" placeholder="Quantity" name="quantity" autocomplete="off" id="quantity" required="required" value="<?php if(!empty($products[0]->quantity)){ echo $products[0]->quantity;}else{ echo set_value('quantity');} ?>"> <span class="red" id="old">
+                                            <?php echo form_error('quantity'); ?></span> </div>
                                 </div>
                                 <div class="form-group"> <label class="col-md-2">Images </label>
                                     <div class="col-lg-6"> <input name="images[]" class="form-control" type="file" multiple="multiple">
@@ -73,3 +85,8 @@
     <!-- row -->
 </div>
 </div>
+
+<script>
+  CKEDITOR.replace('description');
+  CKEDITOR.replace('brief_description');
+</script>

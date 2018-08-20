@@ -29,7 +29,6 @@
             </div>
         </div>
     </div>
-    <?php //echo "<pre>";print_r($products); ?>
     <!-- Google add Ends -->
     <div class="container">
         <div class="row">
@@ -40,7 +39,7 @@
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
                             <div class="ast_product_section">
                                 <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/uploads/').$product->image ?>" class="img-responsive"></a>
+                                    <a href="<?php echo base_url('front/product_details/'.$product->p_id);?>"><img src="<?php echo base_url('asset/uploads/'.$product->image) ?>" class="img-responsive"></a>
                                 </div>
                                 <div class="ast_product_info">
                                     <i class="fa fa-star"></i>
@@ -48,196 +47,21 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-o"></i>
                                     <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html"><?php echo $product->name; ?></a></h4>
-                                    <p>$<?php echo $product->price; ?></p>
+                                    <h4 class="ast_shop_title"><a href="<?php echo base_url('front/product_details/'.$product->p_id);?>"><?php echo $product->name; ?></a></h4>
+                                    <p>$<?php echo number_format($product->price); ?></p>
                                     <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
+
+                                        <a href="#" class="ast_add_cart ast_btn add_cart" data-productid="<?php echo $product->p_id;?>" data-productname="<?php echo $product->name;?>" data-productprice="<?php echo $product->price;?>">add to cart</a>
+
+                                        <!-- <input type="hidden" name="quantity" class="form-control quantity" id="<?php echo $product->p_id; ?>">
+                                        <a href="javascript:void(0)" class="ast_add_cart ast_btn" data-id="<?php echo $product->p_id; ?>" data-image="<?php echo $product->name; ?>" data-price="<?php echo $product->price; ?>" data-image="<?php echo $product->image; ?>" >add to cart</a> -->
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <?php } ?>
-                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Navgrah.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">navgraha Yantra</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Rudhrakhsa.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">rudraksha</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Fengshui.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">feng shui</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Gemstone.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">gemstones</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Jadi-Buti.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">jadi-buti</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Girft-Item.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">gift items</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Navgrah.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">Yantra</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Gemstone.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">gemstones</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
-                            <div class="ast_product_section">
-                                <div class="ast_product_image">
-                                    <a href="shop_single.html"><img src="<?php echo base_url('asset/front/images/content/Products/Fengshui.jpg')?>" class="img-responsive"></a>
-                                </div>
-                                <div class="ast_product_info">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <i class="fa fa-star-o"></i>
-                                    <h4 class="ast_shop_title"><a href="shop_single.html">Feng shui</a></h4>
-                                    <p>$30.00</p>
-                                    <div class="ast_info_bottom">
-                                        <a href="#" class="ast_add_cart ast_btn">add to cart</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> -->
-                        <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="ast_pagination">
-                                <ul class="pagination">
-                                    <li><a href="#">1</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a class="active" href="#">Next</a></li>
-                                </ul>
-                            </div>
-                        </div> -->
+
+                        <?php }?>
                     </div>
                 </div>
             </div>
