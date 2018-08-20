@@ -43,8 +43,14 @@
                     </div>
                     <div class="ast_autho_wrapper">
                         <ul>
+                            <?php $session_ary = $this->session->userdata('logged_in'); 
+                                if(empty($session_ary)){?>
                             <li><a class="popup-with-zoom-anim" href="#login-dialog"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a></li>
                             <li><a class="popup-with-zoom-anim" href="#signup-dialog"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
+                            <?php }else{?>
+                            <li><a href="<?php echo base_url(); ?>index.php/front/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li> 
+                            <?php }
+                            ?>
                             <li class="ast_search">
                                 <a href="javascript:;"><i class="fa fa-search"></i></a>
                                 <div class="ast_search_field">
@@ -57,63 +63,28 @@
                             <li class="ast_cart">
                                 <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
                                  <div id="customcart">
-                            <!-- <div class="ast_cart_box">
-                                   <div class="ast_cart_list">
-                                        <ul>
-
-                                            <li>
-                                                <div class="ast_cart_img">
-                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
-                                                </div>
-                                                <div class="ast_cart_info">
-                                                    <a href="#">Yellow Sapphire</a>
-                                                    <p>1 X $20.00</p>
-                                                    <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="ast_cart_img">
-                                                    <img src="<?php //echo base_url('asset/front/images/content/Products/thumb1.jpg')?>" class="img-responsive">
-                                                </div>
-                                                <div class="ast_cart_info">
-                                                    <a href="#">yantra</a>
-                                                    <p>1 X $10.00</p>
-                                                    <a href="javascript:;" class="ast_cart_remove"><i class="fa fa-trash"></i></a>
-                                                </div>
-                                            </li>
-                                        
-                                        </ul>
-                                    </div>
-                                    <div class="ast_cart_total">
-                                        <p>total<span>$30.00</span></p>
-                                    </div>
-                                    <div class="ast_cart_btn">
-                                        <button type="button">view cart</button>
-                                        <button type="button">checkout</button>
-                                    </div>
-                                  
-                                </div> -->
-                              </div>
+                            
+                                 </div>
                             </li>
                         </ul>
                         <!---->
                         <div id="login-dialog" class="zoom-anim-dialog mfp-hide">
                             <h1>Login Form</h1>
-                            <form>
-                                <input type="text" placeholder="Email">
-                                <input type="password" placeholder="Password">
+                            <form method="POST" action="<?php echo base_url('index.php/front/signin')?>">
+                                <input type="text" placeholder="Email" name="email">
+                                <input type="password" placeholder="Password" name="password">
                                 <div class="ast_login_data">
                                     <label class="tp_custom_check" for="remember_me">Remember me <input type="checkbox" name="ast_remember_me" value="yes" id="ast_remember_me"><span class="checkmark"></span>
                                     </label>
                                     <a href="#">Forgot password ?</a>
                                 </div>
-                                <button type="submit" class="ast_btn">Login</button>
+                                <button type="submit" class="ast_btn" name="login_submit">Login</button>
                                 <p>Create An Account ? <a href="#">SignUp</a></p>
                             </form>
                         </div>
                         <div id="signup-dialog" class="zoom-anim-dialog mfp-hide">
                             <h1>signup form</h1>
-                            <form method="POST" action="">
+                            <form method="POST" action="<?php echo base_url('index.php/front/signup')?>">
                                 <input type="text" name="first_name" id="first_name" placeholder="First Name" required="required">
                                 <span id="error_first_name" class="red"></span>
                                 <input type="text" name="last_name" id="last_name" placeholder="Last Name" required="required">
@@ -124,12 +95,12 @@
                                 <span id="error_password" class="red"></span>
                                 <input type="text" name="mobile" id="mobile" placeholder="Mobile Number" required="required">
                                 <span id="error_mobile" class="red"></span>
-                                <select name="gender" required="required">
+                                <select name="gender" id="gender" required="required">
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
                                 </select>
                                 <span id="error_gender" class="red"></span>
-                                <input type="submit" id="register_btn" class="ast_btn" value="submit">
+                                <input type="submit" id="register_btn" class="ast_btn" name="submit" value="submit">
                                 <p>Have An Account ? <a href="#">Login</a></p>
                             </form>
                         </div>
@@ -163,4 +134,18 @@
             </div>
         </div>
     </div>
+    <?php if($this->session->flashdata('user')) { ?>
+        <div style="text-align: center;color: green">
+            <strong><?php echo $this->session->flashdata('user');?></strong> 
+        </div>
+    <?php } ?>
+    <?php if($this->session->flashdata('user_login')) { ?>
+        <div style="text-align: center;color: green">
+            <strong><?php echo $this->session->flashdata('user_login');?></strong> 
+        </div>
+    <?php } ?>  
+    <?php echo validation_errors();
+          if(isset($error)) {
+          echo '<div class="has-error">'.$error.'</div>';  
+    } ?>    
     <!-- Header End -->

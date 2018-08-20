@@ -159,7 +159,15 @@
                         <h3>Your Daily Horoscope</h3>
                         <p>Prepare yourself for all the goodies coming your way today, and also brace up for the not-so-good things. Find out what's in store for you today</p>
                     </div>
-                    <div class="">
+                    <?php 
+                    //echo "pre";print_r($horoscopes); die;
+                    foreach ($horoscopes as $key => $horoscope) {?>
+                       <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
+                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                        </div>
+                    <?php } ?>
+                    <!-- <div class="">
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
                         </div>
@@ -200,14 +208,22 @@
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="menu1" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Weekly Horoscope</h3>
                         <p>Getting the jitters about finding out how the week will play out for you? Get our weekly horoscope. Follow it, and feel relaxed</p>
                     </div>
-                    <div class="">
+                    <?php 
+                    //echo "pre";print_r($horoscopes); die;
+                    foreach ($horoscopes as $key => $horoscope) {?>
+                       <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
+                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                        </div>
+                    <?php } ?>
+                    <!-- <div class="">
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
                         </div>
@@ -248,14 +264,22 @@
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="menu2" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Monthly Horoscope</h3>
                         <p>Get a sneak peek at your fortune in the month ahead. You'll get all the tips you want in our monthly horoscopes</p>
                     </div>
-                    <div class="">
+                    <?php 
+                    //echo "pre";print_r($horoscopes); die;
+                    foreach ($horoscopes as $key => $horoscope) {?>
+                       <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
+                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                        </div>
+                    <?php } ?>
+                    <!-- <div class="">
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
                         </div>
@@ -296,14 +320,22 @@
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div id="menu3" class="tab-pane fade">
                     <div class="col-xs-12">
                         <h3>Your Yearly Horoscope</h3>
                         <p>Find out the high and low phases for you in the year ahead, and make your plans accordingly. Take precautionary measures for the negative phases, and make the best of the good times!</p>
                     </div>
-                    <div class="">
+                    <?php 
+                    //echo "pre";print_r($horoscopes); die;
+                    foreach ($horoscopes as $key => $horoscope) {?>
+                       <div class="col-xs-6 col-sm-3">
+                            <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
+                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                        </div>
+                    <?php } ?>
+                    <!-- <div class="">
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/aries.png')?>"></a>
                         </div>
@@ -344,7 +376,7 @@
                         <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/front/images/img/pisces.png')?>"></a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

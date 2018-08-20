@@ -106,45 +106,45 @@ $(document).ready(function() {
     };
     date_input.datepicker(options);
 });
-$('#register_btn').click(function(e) {
-    e.preventDefault();
-    var first_name = $('#first_name').val();
-    var last_name = $('#last_name').val();
-    var email = $('#email').val();
-    var password = $('#password').val();
-    var gender = $('#gender').val();
-    var mobile = $('#mobile').val();
+// $('#register_btn').click(function(e) {
+//     e.preventDefault();
+//     var first_name = $('#first_name').val();
+//     var last_name = $('#last_name').val();
+//     var email = $('#email').val();
+//     var password = $('#password').val();
+//     var gender = $('#gender').val();
+//     var mobile = $('#mobile').val();
     
-    if (isAlphaOrParen(first_name)) {
-        return true;
-    }else{
-        $('#error_first_name').html('first name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(first_name)) {
+//         return true;
+//     }else{
+//         $('#error_first_name').html('first name must be alphabetic');
+//         return false;
+//     }
     
-    if (isAlphaOrParen(last_name)) {
-        return true;
-    }else{
-         $('#error_last_name').html('last name must be alphabetic');
-        return false;
-    }
+//     if (isAlphaOrParen(last_name)) {
+//         return true;
+//     }else{
+//          $('#error_last_name').html('last name must be alphabetic');
+//         return false;
+//     }
 
-    if (isEmail(email)) {
-        return true;
-    }else{
-         $('#error_email').html('email must be valid format');
-        return false;
-    }
+//     if (isEmail(email)) {
+//         return true;
+//     }else{
+//          $('#error_email').html('email must be valid format');
+//         return false;
+//     }
 
-    if (validatePhone(mobile)) {
-        return true;
-    }else{
-         $('#error_mobile').html('mobile must be numeric and 10 characters');
-        return false;
-    }
+//     if (validatePhone(mobile)) {
+//         return true;
+//     }else{
+//          $('#error_mobile').html('mobile must be numeric and 10 characters');
+//         return false;
+//     }
 
 
-});
+// });
 
 function isAlphaOrParen(str) {
     return /^[a-zA-Z()]+$/.test(str);
@@ -164,7 +164,9 @@ function validatePhone(txtPhone) {
         return false;
     }
 }
+// $('#register_btn').click(function() {
 
+ 
 $(".ast_add_cart").click(function(){
 
      var product_id = $(this).data("id");
@@ -181,7 +183,7 @@ $(".ast_add_cart").click(function(){
         data:{product_id:product_id, product_name:product_name, product_price:product_price, product_image:product_image, quantity:quantity},
         success:function(data)
         {
-
+          //alert(data);
           alert("Product Added into Cart");
           $('#cart_details').html(data);
           $('#' + product_id).val('');
@@ -199,29 +201,17 @@ $(".ast_add_cart").click(function(){
 */
 $(".carticon").click(function(){
  
+
     $.ajax({
         url:"<?php echo base_url(); ?>front/viewcart",
         method:"GET",
         success:function(data)
         {
-          
+          //alert(data);
           $('#customcart').html(data);
         }
        });
  
-});
-
-$(".ast_cart_remove").click(function(){
-
-   $.ajax({
-        url:"<?php echo base_url(); ?>front/viewcart",
-        method:"POST",
-        //data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
-        success:function(data)
-        {
-         $('#customcart').html(data);
-        }
-      });
 });
 
 $(document).on('click', '.ast_remove_item', function(){
@@ -249,53 +239,43 @@ $(document).on('click', '.ast_remove_item', function(){
     }
 }); 
  
-function loadintocart()
-{
-   
-    
-      $.ajax({
-        url:"<?php echo base_url(); ?>front/add",
-        method:"POST",
-        data:{product_id:product_id, product_name:product_name, product_price:product_price, quantity:quantity},
-        success:function(data)
-        {
-         alert("Product Added into Cart");
-         $('#cart_details').html(data);
-         $('#' + product_id).val('');
+  
 
-        }
-       });
  
-};
+//     alert('sdfgfg');
 
-function removeitem($id)
-{
-  var row_id = $id;//$(this).attr("id");
-   alert(row_id);
-    if(confirm("Are you sure you want to remove this?"))
-    {
-       $.ajax
-       ({
-          url:"<?php echo base_url(); ?>front/remove",
-          method:"POST",
-          data:{row_id:row_id},
-          success:function(data)
-          {
-            alert(data);
-            alert("Product removed from Cart");
+//     var form_data = {
+//         first_name: $('#first_name').val(),
+//         last_name: $('#last_name').val()
+//         email: $('#email').val(),
+//         password : $('#password').val(),
+//         mobile : $('#mobile').val(),
+//         gender : $('#gender').val()
+            
+//     };
+//     $.ajax({
+//         url: "<?php //echo site_url('contact/submit'); ?>",
+//         type: 'POST',
+//         data: form_data,
+//         success: function(msg) {
+//             if (msg == "no")
+//             {   
+//                 $('#contact_form').append(msg);
+//             }
+//             if (msg == "yes")
+//             {   
+//                 $('#contact_form').append(msg);
+//             }               
 
-            $('#cart_details').html(data);
-          }
-       }); 
-    }
-    else
-    {
-       return false;
-    }
-}
+//         }
+//     });
 
+//     return false;
+// });
+ 
 
 </script>
+
 </body>
 
 </html>
