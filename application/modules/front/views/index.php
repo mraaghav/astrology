@@ -164,7 +164,7 @@
                     foreach ($horoscopes as $key => $horoscope) {?>
                        <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                            <h4 style="text-align: center;"><?php echo $horoscope['horoscope_name']; ?></h4>
                         </div>
                     <?php } ?>
                     <!-- <div class="">
@@ -220,7 +220,7 @@
                     foreach ($horoscopes as $key => $horoscope) {?>
                        <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                            <h4 style="text-align: center;"><?php echo $horoscope['horoscope_name']; ?></h4>
                         </div>
                     <?php } ?>
                     <!-- <div class="">
@@ -276,7 +276,7 @@
                     foreach ($horoscopes as $key => $horoscope) {?>
                        <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                            <h4 style="text-align: center;"><?php echo $horoscope['horoscope_name']; ?></h4>
                         </div>
                     <?php } ?>
                     <!-- <div class="">
@@ -332,7 +332,7 @@
                     foreach ($horoscopes as $key => $horoscope) {?>
                        <div class="col-xs-6 col-sm-3">
                             <a href="#"><img src="<?php echo base_url('asset/uploads/'.$horoscope['image'])?>"></a>
-                            <h3><?php echo $horoscope['horoscope_name']; ?></h3>
+                            <h4 style="text-align: center;"><?php echo $horoscope['horoscope_name']; ?></h4>
                         </div>
                     <?php } ?>
                     <!-- <div class="">
