@@ -31,11 +31,11 @@
                     <h4 class="widget-title">our services</h4>
                     <div class="ast_servicelink">
                         <ul>
-                            <li><a href="horoscopes.html">Daily Horoscope</a></li>
-                            <li><a href="gemstones.html">gemstones</a></li>
-                            <li><a href="numerology.html">numerology</a></li>
-                            <li><a href="tarot.html">tarot cards</a></li>
-                            <li><a href="journal.html">Match Making</a></li>
+                            <li><a href="">Daily Horoscope</a></li>
+                            <li><a href="">gemstones</a></li>
+                            <li><a href="">numerology</a></li>
+                            <li><a href="">tarot cards</a></li>
+                            <li><a href="">Match Making</a></li>
                         </ul>
                     </div>
                 </div>
@@ -45,10 +45,10 @@
                     <h4 class="widget-title">quick links</h4>
                     <div class="ast_sociallink">
                         <ul>
-                            <li><a href="about.html">about</a></li>
-                            <li><a href="shop.html">Shop</a></li>
-                            <li><a href="donate.html">Donate</a></li>
-                            <li><a href="contact.html">contact</a></li>
+                            <li><a href="<?php echo base_url('front/about')?>">about</a></li>
+                            <li><a href="<?php echo base_url('front/shop')?>">Shop</a></li>
+                            <li><a href="<?php echo base_url('front/donate')?>">Donate</a></li>
+                            <li><a href="<?php echo base_url('front/contact')?>">contact</a></li>
                         </ul>
                     </div>
                 </div>
@@ -172,12 +172,13 @@
         });        
     });                  
     $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
+    
     $(document).on('click', '.romove_cart', function() {            
         var row_id = $(this).attr("id");            
         $.ajax({                
             url: "<?php echo site_url('front/delete_cart');?>",
-                        method: "POST",
-                        data: {
+            method: "POST",
+            data: {
                 row_id: row_id
             },
             success: function(data) {                    
@@ -205,51 +206,38 @@
         }
     }
     $(".ast_add_cart").click(function() {
-        var product_id = $(this).data("id");
-        var product_price = $(this).data("price");
-        var product_name = $(this).data("name");
-        var product_image = $(this).data("image");
-        var quantity = 1; //$('#' + product_id).val();  
-        if (quantity != '' && quantity > 0) {
-            $.ajax({
-                url: "<?php echo base_url(); ?>front/add",
-                method: "POST",
-                data: {
-                    product_id: product_id,
-                    product_name: product_name,
-                    product_price: product_price,
-                    product_image: product_image,
-                    quantity: quantity
-                },
-                success: function(data) {
-                    //alert(data);
-                    alert("Product Added into Cart");
-                    $('#cart_details').html(data);
-                    $('#' + product_id).val('');
-                }
-            });
-        } else {
-            alert("Please Enter quantity");
-        }
+        var product_id    = $(this).data("productid");            
+        var quantity      = $('#' + product_id).val();       
+        $.ajax({                
+            url: "<?php echo site_url('front/add_to_cart');?>",
+            method: "POST",
+            data: {
+                product_id: product_id,
+                quantity: quantity
+            },
+            success: function(data) {                    
+                $('.ast_cart_box').html(data);                
+            }            
+        });        
+
     });
 /* 
  **  Function For Load into Cart after add into cart 
  */
     $(".carticon").click(function() {
         $.ajax({
-            url: "<?php echo base_url(); ?>front/viewcart",
+            url: "<?php echo base_url('front/viewcart'); ?>",
             method: "GET",
             success: function(data) {
-                //alert(data);
                 $('#customcart').html(data);
             }
         });
     });
     $(document).on('click', '.ast_remove_item', function() {
-        var row_id = $(this).attr("id");
+        var row_id = $(this).attr('id');
         if (confirm("Are you sure you want to remove this?")) {
             $.ajax({
-                url: "<?php echo base_url(); ?>front/remove",
+                url: "<?php echo base_url('front/remove'); ?>",
                 method: "POST",
                 data: {
                     row_id: row_id
@@ -263,9 +251,30 @@
         }
     });
 
+    $(document).on('click', '.update_cart_item', function() {
+        var row_id      = $(this).attr('id');
+        var quantity    = $('#pro_quantity_'+row_id).val();
+        if(quantity>=0){
+                $.ajax({
+                    url: "<?php echo base_url('front/update_cart'); ?>",
+                    method: "POST",
+                    data: {
+                        row_id: row_id,
+                        quantity:quantity
+                    },
+                    success: function(data) {
+                        //window.location.reload();
+                    }
+                });
+        }else{
+            alert('quantity cannot be negative');
+            return false;
+        }
+    });
+
     function loadintocart() {
         $.ajax({
-            url: "<?php echo base_url(); ?>front/add",
+            url: "<?php echo base_url('front/add'); ?>",
             method: "POST",
             data: {
                 product_id: product_id,
@@ -283,10 +292,9 @@
 
     function removeitem($id) {
         var row_id = $id;
-        alert(row_id);
         if (confirm("Are you sure you want to remove this?")) {
             $.ajax({
-                url: "<?php echo base_url(); ?>front/remove",
+                url: "<?php echo base_url('front/remove'); ?>",
                 method: "POST",
                 data: {
                     row_id: row_id
