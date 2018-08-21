@@ -70,7 +70,7 @@
 							<!-- <td>&nbsp;</td> -->
 						</tr>
 					</table>
-					<a href="checkout.html" class="proceed_btn ast_btn" value="Apply Cupon Code">checkout</a>
+					<a href="<?php echo base_url('front/buy')?>" class="proceed_btn ast_btn" value="Apply Cupon Code">checkout</a>
 				</div>
 			</div>
 		</div>

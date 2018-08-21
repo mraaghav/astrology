@@ -22,6 +22,11 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/front/css/style.css')?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('asset/css/timepicker.css')?>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+
+    <link rel="stylesheet" href="<?php echo base_url('asset/css/sweetalert.min.css')?>" rel="stylesheet" type="text/css">
+
+
+
     <!-- Favicon Link -->
     <link rel="shortcut icon" type="image/png" href="<?php echo base_url('asset/front/images/header/favicon.png')?>">
     <style type="text/css">
@@ -89,7 +94,7 @@
                         </div>
                         <div id="signup-dialog" class="zoom-anim-dialog mfp-hide">
                             <h1>signup form</h1>
-                            <form method="POST" action="<?php echo base_url('index.php/front/signup')?>">
+                            <form method="POST" action="<?php echo base_url('front/signup')?>">
                                 <input type="text" name="first_name" id="first_name" placeholder="First Name" required="required">
                                 <span id="error_first_name" class="red"></span>
                                 <input type="text" name="last_name" id="last_name" placeholder="Last Name" required="required">
@@ -139,20 +144,15 @@
             </div>
         </div>
     </div>
-    <?php if($this->session->flashdata('user')) { ?>
-    <div style="text-align: center;color: green">
+    <?php if($this->session->flashdata('info_msg')) { ?>
+    <div class="alert alert-success">
         <strong>
-            <?php echo $this->session->flashdata('user');?></strong>
+            <?php echo $this->session->flashdata('info_msg');?></strong>
     </div>
-    <?php } ?>
-    <?php if($this->session->flashdata('user_login')) { ?>
-    <div style="text-align: center;color: green">
-        <strong>
-            <?php echo $this->session->flashdata('user_login');?></strong>
+    <?php } if($this->session->flashdata('error_msg')){?>
+    <div class="alert alert-info">
+      <strong>Info!</strong> <?php echo $this->session->flashdata('error_msg');?>
     </div>
-    <?php } ?>
-    <?php echo validation_errors();
-          if(isset($error)) {
-          echo '<div class="has-error">'.$error.'</div>';  
-    } ?>
+    <?php }?>
+        
     <!-- Header End -->

@@ -6,11 +6,11 @@
                 <div class="ast_footer_info">
                     <img src="<?php echo base_url('asset/uploads/'.$setting[0]['site_logo'])?>" alt="Logo">
                     <ul>
-                        <li><a href="<?php echo $setting[0]['facebook_url']; ?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['facebook_url'];?>"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
                         <li><a href="<?php echo $setting[0]['google_url']; ?>"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
-                        <li><a href="<?php echo $setting[0]['pinterest_url']; ?>"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
-                        <li><a href="<?php echo $setting[0]['linkedin_url']; ?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
-                        <li><a href="<?php echo $setting[0]['twitter_url']; ?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['pinterest_url'];?>"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['linkedin_url'];?>"><i class="fa fa-linkedin" aria-hidden="true"></i></a></li>
+                        <li><a href="<?php echo $setting[0]['twitter_url'];?>"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -61,10 +61,16 @@
                             <li><i class="fa fa-home" aria-hidden="true"></i>
                                 <p>2794, Hayhurst Lane Bloomfield Township, MI 48302</p>
                             </li>
-                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#"><?php echo $setting[0]['site_mail']; ?></a><a href="#"><?php echo $setting[0]['site_mail']; ?></a></li>
+                            <li><i class="fa fa-at" aria-hidden="true"></i> <a href="#">
+                                    <?php echo $setting[0]['site_mail']; ?></a><a href="#">
+                                    <?php echo $setting[0]['site_mail']; ?></a></li>
                             <li><i class="fa fa-phone" aria-hidden="true"></i>
-                                <p><?php echo $setting[0]['site_phone']; ?></p>
-                                <p><?php echo $setting[0]['site_alternative_phone']; ?></p>
+                                <p>
+                                    <?php echo $setting[0]['site_phone']; ?>
+                                </p>
+                                <p>
+                                    <?php echo $setting[0]['site_alternative_phone']; ?>
+                                </p>
                             </li>
                         </ul>
                     </div>
@@ -92,11 +98,10 @@
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/slick/slick.min.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/js/timepicker.js')?>"></script>
-
+<script type="text/javascript" src="<?php echo base_url('asset/js/sweetalert.min.js')?>"></script>
 <script type="text/javascript" src="<?php echo base_url('asset/front/js/custom.js')?>"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js">
 </script>
-
 <script type="text/javascript">
     $(document).ready(function() {
         $('#female_birth_time').timepicker({
@@ -109,7 +114,7 @@
             interval: 1,
             scrollbar: true
         });
-        var date_input = $('input[name="date"]'); 
+        var date_input = $('input[name="date"]');
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         var options = {
             format: 'mm/dd/yyyy',
@@ -127,7 +132,6 @@
             var id = parseInt(id);
             $('#myCarousel').carousel(id);
         });
-        
         $('#myCarousel').on('slid.bs.carousel', function(e) {
             var id = $('.item.active').data('slide-number');
             $('#carousel-text').html($('#slide-content-' + id).html());
@@ -156,23 +160,8 @@
             return false;
         }
     }
-    $('.add_cart').click(function() {            
-        var product_id    = $(this).data("productid");            
-        var quantity      = $('#' + product_id).val();       
-        $.ajax({                
-            url: "<?php echo site_url('front/add_to_cart');?>",
-            method: "POST",
-            data: {
-                product_id: product_id,
-                quantity: quantity
-            },
-            success: function(data) {                    
-                $('.ast_cart_box').html(data);                
-            }            
-        });        
-    });                  
+            
     $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
-    
     $(document).on('click', '.romove_cart', function() {            
         var row_id = $(this).attr("id");            
         $.ajax({                
@@ -215,15 +204,15 @@
                 product_id: product_id,
                 quantity: quantity
             },
-            success: function(data) {                    
+            success: function(data) {
+                swal("Good job!", "Product Added to Cart", "success");     
                 $('.ast_cart_box').html(data);                
             }            
         });        
-
     });
-/* 
- **  Function For Load into Cart after add into cart 
- */
+    /* 
+     **  Function For Load into Cart after add into cart 
+     */
     $(".carticon").click(function() {
         $.ajax({
             url: "<?php echo base_url('front/viewcart'); ?>",
@@ -235,39 +224,56 @@
     });
     $(document).on('click', '.ast_remove_item', function() {
         var row_id = $(this).attr('id');
-        if (confirm("Are you sure you want to remove this?")) {
+        swal({
+            title: "Are you sure?",
+            text: "you want to remove this from cart!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#DD6B55",
+            confirmButtonText: "Yes, remove it!",
+            closeOnConfirm: false
+        }, function(isConfirm) {
+            if (!isConfirm) return;
             $.ajax({
-                url: "<?php echo base_url('front/remove'); ?>",
-                method: "POST",
+                url: "<?php echo base_url('front/remove')?>",
+                type: "POST",
                 data: {
                     row_id: row_id
                 },
-                success: function(data) {
+                success: function() {
+                    swal("Done!", "It was succesfully deleted!", "success");
                     window.location.reload();
+                },
+                error: function(xhr, ajaxOptions, thrownError) {
+                    swal("Error deleting!", "Please try again", "error");
+                }
+            });
+        });
+    });
+    $(document).on('click', '.update_cart_item', function() {
+        var row_id = $(this).attr('id');
+        var quantity = $('#pro_quantity_' + row_id).val();
+        if (quantity >= 0) {
+            $.ajax({
+                url: "<?php echo base_url('front/update_cart'); ?>",
+                method: "POST",
+                data: {
+                    row_id: row_id,
+                    quantity: quantity
+                },
+                success: function(data) {
+                    swal({
+                        title: "Updated!",
+                        text: "Cart has been updated successfully",
+                        imageUrl: "<?php echo base_url('asset/uploads/thumbs-up.jpg');?>"
+                    });
+                    window.setTimeout(function() {
+                        window.location.reload();
+                    }, 2000);
                 }
             });
         } else {
-            return false;
-        }
-    });
-
-    $(document).on('click', '.update_cart_item', function() {
-        var row_id      = $(this).attr('id');
-        var quantity    = $('#pro_quantity_'+row_id).val();
-        if(quantity>=0){
-                $.ajax({
-                    url: "<?php echo base_url('front/update_cart'); ?>",
-                    method: "POST",
-                    data: {
-                        row_id: row_id,
-                        quantity:quantity
-                    },
-                    success: function(data) {
-                        //window.location.reload();
-                    }
-                });
-        }else{
-            alert('quantity cannot be negative');
+            swal("Quantity can not be negative");
             return false;
         }
     });
@@ -307,10 +313,7 @@
             return false;
         }
     }
-       
-
 </script>
-
 </body>
 
 </html>

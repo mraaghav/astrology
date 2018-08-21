@@ -6,6 +6,7 @@ class Front extends CI_Controller
     {
         parent::__construct();
         $this->load->library('cart');
+        $this->load->library('paypal_lib');
         
     }
     public function index($msg = NULL)
@@ -107,7 +108,7 @@ class Front extends CI_Controller
                 );
                 //print_r($data); die;
                 $result = $this->model->insertData('users', $data);
-                $this->session->set_flashdata('user', 'User Detailes has been Added Successfully');
+                $this->session->set_flashdata('info_msg', 'User Detailes has been Added Successfully');
                 $data['body'] = 'index';
                 $this->controller->load_view($data);
             }
@@ -137,7 +138,7 @@ class Front extends CI_Controller
                         'userrole' => $row->user_role
                     );
                     $this->session->set_userdata('logged_in', $sess_array);
-                    $this->session->set_flashdata('user_login', 'User Login Successfully');
+                    $this->session->set_flashdata('info_msg', 'User Login Successfully');
                     $data['body'] = 'index';
                     $this->controller->load_view($data);
                 }
@@ -286,13 +287,7 @@ class Front extends CI_Controller
                 $rowid  = $item['rowid'];
                 $qty    = $item['qty'] + $qty;
             }
-
-            // echo $item['qty'];
-            // echo '<br/>';
-            // echo $qty;
-            // echo '<br/>';
-            // echo $item['qty'] + $qty;
-            // die;
+            
         }
         
         $where    = array(
@@ -307,11 +302,11 @@ class Front extends CI_Controller
             'price' => $products[0]->price,
             'image' => $products[0]->image
         );
-
-
-        echo '<pre>';
-        print_r($this->cart->contents());
-        die;       
+        
+        
+        // echo '<pre>';
+        // print_r($this->cart->contents());
+        // die;
         
         if ($exists == 1) {
             $this->cart->update($data);
@@ -319,7 +314,7 @@ class Front extends CI_Controller
             $this->cart->insert($data); //return rowid 
     }
     public function viewcart()
-    {        
+    {
         if (count($this->cart->contents()) > 0) {
             $output = '<div class="ast_cart_box"><div class="ast_cart_list"><ul>';
             $count  = 0;
@@ -327,17 +322,17 @@ class Front extends CI_Controller
             
             foreach ($this->cart->contents() as $items) {
                 $count++;
-
-                if(!empty($items['image'])){
-                    $url     = base_url('asset/uploads/' . $items['image']);
-                }else{
+                
+                if (!empty($items['image'])) {
+                    $url = base_url('asset/uploads/' . $items['image']);
+                } else {
                     $url = base_url('asset/uploads/images.png');
                 }
                 $cartitemid = $items['rowid'];
                 $output .= '<li><div class="ast_cart_img"><img src="' . $url . '" class="img-responsive"></div><div class="ast_cart_info"><a href="#">' . $items["name"] . '</a><p>' . $items['qty'] . ' X $' . $items["price"] . '</p><a href="javascript:void(0);" id="' . $items['rowid'] . '" class="ast_cart_remove ast_remove_item"><i class="fa fa-trash"></i></a></div></li>';
                 $total += $items['qty'] * $items['price'];
             }
-            $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '" class="btn btn-default">view cart</a>&nbsp;<a href="" class="btn btn-info">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
+            $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '" class="btn btn-default">view cart</a>&nbsp;<a href="' . base_url('front/buy') . '" class="btn btn-info">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
             
             echo $output;
         }
@@ -443,7 +438,7 @@ class Front extends CI_Controller
             $no++;
             $output .= '<li><div class="ast_cart_info"><a href="#">' . $items['name'] . '</a><p>' . $items['qty'] . ' X $' . number_format($items['price']) . '</p><button type="button" id="' . $items['rowid'] . '" class="romove_cart btn btn-danger btn-sm">Remove</button></a></div></li>';
         }
-        $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '">view cart</a><a href="">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
+        $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '">view cart</a><a href="' . base_url('front/buy') . '">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
         return $output;
     }
     
@@ -467,31 +462,130 @@ class Front extends CI_Controller
         $data['body']    = 'cart';
         $this->controller->load_view($data);
     }
-
-
-
-
+    
+    
+    
+    
     // vivek add to cart 
-
+    
     public function add_to_cart()
     {
-        if(!empty($this->input->post('quantity'))){
+        if (!empty($this->input->post('quantity'))) {
             $quantity = $this->input->post('quantity');
-        }else{
+        } else {
             $quantity = 1;
         }
-
-        $where    = array('products.id'=>$this->input->post('product_id'));
-
-        $products = $this->model->GetJoinRecord('products','id','product_images','product_id','products.name,products.price,product_images.image', $where,'products.id');        
-        $data = array(
+        
+        $where = array(
+            'products.id' => $this->input->post('product_id')
+        );
+        
+        $products = $this->model->GetJoinRecord('products', 'id', 'product_images', 'product_id', 'products.name,products.price,product_images.image', $where, 'products.id');
+        $data     = array(
             'id' => $this->input->post('product_id'),
             'name' => $products[0]->name,
             'price' => $products[0]->price,
-            'qty' =>  $quantity,
+            'qty' => $quantity,
             'image' => $products[0]->image
         );
         $this->cart->insert($data);
         echo $this->show_cart();
+    }
+    
+    
+    
+    function buy()
+    {
+        
+        if ($this->controller->checkSession()) {
+            // Set variables for paypal form
+            $returnURL = base_url('front/success'); //payment success url
+            $cancelURL = base_url('front/cancel'); //payment cancel url
+            $notifyURL = base_url('front/ipn'); //ipn url
+            
+            // Get product data
+            $product = $this->cart->contents();
+            
+            // Add fields to paypal form
+            
+            $this->paypal_lib->add_field('return', $returnURL);
+            $this->paypal_lib->add_field('cancel_return', $cancelURL);
+            $this->paypal_lib->add_field('notify_url', $notifyURL);
+            $this->paypal_lib->add_field('upload', '1');
+            
+            //$this->paypal_lib->add_field('cmd', '_cart');
+            //$this->paypal_lib->add_field('custom', $userID);
+            
+            $i = 1;
+            
+            foreach ($product as $value) {
+                $this->paypal_lib->add_field('item_name_' . $i, $value['name']);
+                $this->paypal_lib->add_field('item_number_' . $i, $value['id']);
+                $this->paypal_lib->add_field('amount_' . $i, $value['price']);
+                $this->paypal_lib->add_field('quantity_' . $i, $value['qty']);
+                //$this->paypal_lib->image(base_url('asset/uploads/'.$value['image']));
+                $i++;
+            }
+            // Load paypal form
+            $this->paypal_lib->paypal_auto_form();
+        } else {
+            $this->session->set_flashdata('error_msg', 'Please Signup/Login to Continue...');
+            redirect('front/index');
+        }
+    }
+    
+    
+    function success()
+    {
+        $data['setting'] = $this->model->getAll('site_setting', '');
+        // Get the transaction data
+        $paypalInfo      = $this->input->post();
+        
+        for ($i = 1; $i < $paypalInfo['num_cart_items']; $i++) {
+            $data['item'][$i]['name']        = $paypalInfo['item_name' . $i];
+            $data['item'][$i]['item_number'] = $paypalInfo['item_number' . $i];
+            $data['item'][$i]['quantity']    = $paypalInfo['quantity' . $i];
+            $data['item'][$i]['mc_gross']    = $paypalInfo['mc_gross_' . $i];
+        }
+        $data['txn_id']         = $paypalInfo['txn_id'];
+        $data['payment_amt']    = $paypalInfo['payment_gross'];
+        $data['currency_code']  = $paypalInfo['mc_currency'];
+        $data['status']         = $paypalInfo['payment_status'];
+        $data['pending_reason'] = $paypalInfo['pending_reason'];
+        
+        // Pass the transaction data to view
+        
+        $data['body'] = 'success';
+        $this->controller->load_view($data);
+        
+    }
+    
+    function cancel()
+    {
+        // Load payment failed view
+        $data['body'] = 'cancel';
+        $this->controller->load_view($data);
+    }
+    
+    function ipn()
+    {
+        $paypalInfo = $this->input->post();   
+        echo '<pre>';
+        print_r($paypalInfo);
+        die;
+        $data['user_id']        = $paypalInfo['custom'];
+        $data['product_id']     = $paypalInfo["item_number"];
+        $data['txn_id']         = $paypalInfo["txn_id"];
+        $data['payment_gross']  = $paypalInfo["mc_gross"];
+        $data['currency_code']  = $paypalInfo["mc_currency"];
+        $data['payer_email']    = $paypalInfo["payer_email"];
+        $data['payment_status'] = $paypalInfo["payment_status"];
+        $paypalURL              = $this->paypal_lib->paypal_url;
+        $result                 = $this->paypal_lib->curlPost($paypalURL, $paypalInfo);
+        
+        if (preg_match("/VERIFIED/i", $result)) {
+            echo $data;
+            die;
+        }
     }
 }
