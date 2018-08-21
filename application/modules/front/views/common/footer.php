@@ -206,7 +206,7 @@
         }
     }
     $(".ast_add_cart").click(function() {
-        var product_id    = $(this).data("productid");            
+        var product_id    = $(this).data("id");            
         var quantity      = $('#' + product_id).val();       
         $.ajax({                
             url: "<?php echo site_url('front/add_to_cart');?>",

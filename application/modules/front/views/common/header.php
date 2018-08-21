@@ -32,8 +32,7 @@
 </head>
 
 <body>
-    <?php //echo "<pre>";print_r($setting); 
-    //echo $setting[0]['id']; ?>
+
     <!-- Header Start -->
     <div class="ast_top_header">
         <div class="container">

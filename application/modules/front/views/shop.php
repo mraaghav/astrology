@@ -49,18 +49,11 @@
                                     <h4 class="ast_shop_title"><a href="<?php echo base_url('front/product_details/'.$product->p_id);?>"><?php echo $product->name; ?></a></h4>
                                     <p>$<?php echo number_format($product->price); ?></p>
                                     <div class="ast_info_bottom">
-
-
-                                        <input type="hidden" name="quantity" class="form-control quantity" id="<?php echo $product->p_id; ?>">
-                                        <a href="#" data-image="<?php echo $product->image; ?>" data-id="<?php echo $product->p_id; ?>" data-price="<?php echo $product->price;?>" data-name="<?php echo $product->name; ?>" class="ast_add_cart ast_btn"  >add to cart</a>
-
-
+                                        <a href="javascript:void(0)" data-id="<?php echo $product->p_id;?>" class="ast_add_cart ast_btn">add to cart</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                         <?php }?>
 
                     </div>

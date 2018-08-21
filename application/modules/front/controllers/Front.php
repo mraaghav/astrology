@@ -6,38 +6,36 @@ class Front extends CI_Controller
     {
         parent::__construct();
         $this->load->library('cart');
+        
     }
     public function index($msg = NULL)
     {
         $data['horoscopes'] = $this->model->getAll('horoscope', '');
-        $data['setting'] = $this->model->getAll('site_setting', '');
-         $where    = array(
-            'id' =>  1
+        
+        $where           = array(
+            'id' => 1
         );
-        $data['pages'] = $this->model->getsingle('pages', $where);
-        $data['body']       = 'index';
+        $data['setting'] = $this->model->getAll('site_setting', '');
+        $data['pages']   = $this->model->getsingle('pages', $where);
+        $data['body']    = 'index';
         $this->controller->load_view($data);
         
     }
-    // public function header($msg = NULL)
-    // {
-    //     $data['setting'] = $this->model->getAll('site_setting', '');
-    //     $data['body']    = 'common/header';
-    //     $this->controller->load_view($data);
-    // }
-
+    
+    
     public function about()
     {
         $data['setting'] = $this->model->getAll('site_setting', '');
-         $where    = array(
-            'id' =>  2
+        $where           = array(
+            'id' => 2
         );
-        $data['pages'] = $this->model->getsingle('pages', $where);
-        $data['body'] = 'about';
+        $data['pages']   = $this->model->getsingle('pages', $where);
+        $data['body']    = 'about';
         $this->controller->load_view($data);
     }
     public function shop()
     {
+        $data['setting']  = $this->model->getAll('site_setting', '');
         $where            = array(
             'products.is_active' => 1
         );
@@ -47,18 +45,20 @@ class Front extends CI_Controller
     }
     public function donate()
     {
-        $data['body'] = 'donate';
+        $data['setting'] = $this->model->getAll('site_setting', '');
+        $data['body']    = 'donate';
         $this->controller->load_view($data);
     }
     public function contact()
     {
-        $data['body'] = 'contact';
+        $data['setting'] = $this->model->getAll('site_setting', '');
+        $data['body']    = 'contact';
         $this->controller->load_view($data);
     }
     
     public function product_details($id = null)
     {
-        
+        $data['setting']  = $this->model->getAll('site_setting', '');
         $data['products'] = $this->db->query("SELECT x.name,x.id,x.price,x.description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
         $data['body']     = 'product_detail';
         $this->controller->load_view($data);
@@ -269,17 +269,30 @@ class Front extends CI_Controller
      */
     public function add()
     {
-        $id     = $_POST['product_id'];
-        $qty    = $_POST["quantity"];
+        $id = $this->input->post('product_id');
+        if (!empty($this->input->post('quantity'))) {
+            $qty = $this->input->post('quantity');
+        } else {
+            $qty = 1;
+        }
         $cart   = $this->cart->contents();
-        $exists = false;
+        $exists = 0;
         $rowid  = '';
+        //echo '<pre>';
         foreach ($cart as $item) {
+            //print_r($item);
             if ($item['id'] == $id) {
-                $exists = true;
+                $exists = 1;
                 $rowid  = $item['rowid'];
                 $qty    = $item['qty'] + $qty;
             }
+
+            // echo $item['qty'];
+            // echo '<br/>';
+            // echo $qty;
+            // echo '<br/>';
+            // echo $item['qty'] + $qty;
+            // die;
         }
         
         $where    = array(
@@ -288,20 +301,25 @@ class Front extends CI_Controller
         $products = $this->model->GetJoinRecord('products', 'id', 'product_images', 'product_id', 'products.name,products.price,product_images.image', $where, 'products.id');
         $data     = array(
             'rowid' => $rowid,
-            'id' => $this->input->post('product_id'),
-            'name' => $products[0]->name,
+            'id' => $id,
             'qty' => $qty,
+            'name' => $products[0]->name,
             'price' => $products[0]->price,
             'image' => $products[0]->image
         );
+
+
+        echo '<pre>';
+        print_r($this->cart->contents());
+        die;       
         
-        if ($exists) {
+        if ($exists == 1) {
             $this->cart->update($data);
         } else
             $this->cart->insert($data); //return rowid 
     }
     public function viewcart()
-    {
+    {        
         if (count($this->cart->contents()) > 0) {
             $output = '<div class="ast_cart_box"><div class="ast_cart_list"><ul>';
             $count  = 0;
@@ -309,12 +327,17 @@ class Front extends CI_Controller
             
             foreach ($this->cart->contents() as $items) {
                 $count++;
-                $url        = base_url('asset/uploads/' . $items['image']);
+
+                if(!empty($items['image'])){
+                    $url     = base_url('asset/uploads/' . $items['image']);
+                }else{
+                    $url = base_url('asset/uploads/images.png');
+                }
                 $cartitemid = $items['rowid'];
                 $output .= '<li><div class="ast_cart_img"><img src="' . $url . '" class="img-responsive"></div><div class="ast_cart_info"><a href="#">' . $items["name"] . '</a><p>' . $items['qty'] . ' X $' . $items["price"] . '</p><a href="javascript:void(0);" id="' . $items['rowid'] . '" class="ast_cart_remove ast_remove_item"><i class="fa fa-trash"></i></a></div></li>';
                 $total += $items['qty'] * $items['price'];
             }
-             $output .= '</ul></div><div class="ast_cart_btn"><a href="'.base_url('front/cart').'" class="btn btn-default">view cart</a>&nbsp;<a href="" class="btn btn-info">checkout</a></div><li><div>Total</div><div>'.'$'.number_format($this->cart->total()).'</div></li>';
+            $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '" class="btn btn-default">view cart</a>&nbsp;<a href="" class="btn btn-info">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
             
             echo $output;
         }
@@ -327,21 +350,28 @@ class Front extends CI_Controller
     public function remove()
     {
         $row_id = $this->input->post('row_id');
-        $data   = array('rowid' => $row_id,'qty' => 0);
+        $data   = array(
+            'rowid' => $row_id,
+            'qty' => 0
+        );
         $this->cart->update($data);
     }
-
+    
     public function update_cart()
     {
-        $row_id = $this->input->post('row_id');
+        $row_id   = $this->input->post('row_id');
         $quantity = $this->input->post('quantity');
-        $data   = array('rowid' => $row_id,'qty' => $quantity);
+        $data     = array(
+            'rowid' => $row_id,
+            'qty' => $quantity
+        );
         $this->cart->update($data);
     }
     
     
     public function contactus()
     {
+        
         $this->form_validation->set_rules('first_name', 'First Name', 'trim|required|min_length[2]');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('subject', 'Subject', 'trim|required|min_length[2]');
@@ -413,10 +443,10 @@ class Front extends CI_Controller
             $no++;
             $output .= '<li><div class="ast_cart_info"><a href="#">' . $items['name'] . '</a><p>' . $items['qty'] . ' X $' . number_format($items['price']) . '</p><button type="button" id="' . $items['rowid'] . '" class="romove_cart btn btn-danger btn-sm">Remove</button></a></div></li>';
         }
-        $output .= '</ul></div><div class="ast_cart_btn"><a href="'.base_url('front/cart').'">view cart</a><a href="">checkout</a></div><li><div>Total</div><div>'.'$'.number_format($this->cart->total()).'</div></li>';
+        $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '">view cart</a><a href="">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
         return $output;
     }
-
+    
     public function load_cart()
     {
         echo $this->show_cart();
@@ -430,9 +460,38 @@ class Front extends CI_Controller
         $this->cart->update($data);
         echo $this->show_cart();
     }
-
-    public function cart(){
-        $data['body'] = 'cart';
+    
+    public function cart()
+    {
+        $data['setting'] = $this->model->getAll('site_setting', '');
+        $data['body']    = 'cart';
         $this->controller->load_view($data);
+    }
+
+
+
+
+    // vivek add to cart 
+
+    public function add_to_cart()
+    {
+        if(!empty($this->input->post('quantity'))){
+            $quantity = $this->input->post('quantity');
+        }else{
+            $quantity = 1;
+        }
+
+        $where    = array('products.id'=>$this->input->post('product_id'));
+
+        $products = $this->model->GetJoinRecord('products','id','product_images','product_id','products.name,products.price,product_images.image', $where,'products.id');        
+        $data = array(
+            'id' => $this->input->post('product_id'),
+            'name' => $products[0]->name,
+            'price' => $products[0]->price,
+            'qty' =>  $quantity,
+            'image' => $products[0]->image
+        );
+        $this->cart->insert($data);
+        echo $this->show_cart();
     }
 }
