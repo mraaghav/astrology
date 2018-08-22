@@ -467,19 +467,23 @@ class Admin extends CI_Controller
         if ($this->controller->checkSession()) {
             $this->form_validation->set_rules('product_name', 'Name', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('price', 'Price', 'trim|required');
+            $this->form_validation->set_rules('category_id', 'Category Id', 'trim|required');
             $this->form_validation->set_rules('brief_description', 'Brief Description', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('quantity', 'Quantity', 'trim|required');
             $this->form_validation->set_rules('ref_no', 'Ref Number', 'trim|required');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
                 if (!empty($id)) {
-                    $data['products'] = $this->db->query("SELECT x.name,x.id,x.price,x.description,x.quantity,x.ref_no,x.brief_description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
+                    $data['products'] = $this->db->query("SELECT x.name,x.category_id,x.id,x.price,x.description,x.quantity,x.ref_no,x.brief_description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
                 }
+                $where = array('is_active'=>1);
+                $data['categories'] = $this->model->getAllwhere('categories', $where);
                 $data['body'] = 'products';
                 $this->controller->load_view($data);
             } else {
                 $name              = $this->input->post('product_name');
                 $price             = $this->input->post('price');
+                $category_id       = $this->input->post('category_id');
                 $description       = $this->input->post('description');
                 $brief_description = $this->input->post('brief_description');
                 $quantity          = $this->input->post('quantity');
@@ -487,6 +491,7 @@ class Admin extends CI_Controller
                 $data              = array(
                     'name' => $name,
                     'price' => $price,
+                    'category_id'=>$category_id,
                     'description' => $description,
                     'brief_description' => $brief_description,
                     'quantity' => $quantity,
@@ -672,12 +677,6 @@ class Admin extends CI_Controller
             $this->form_validation->set_rules('site_mail', 'Site Mail', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('site_phone', 'Site Phone', 'trim|required|min_length[2]');
             $this->form_validation->set_rules('a_site_phone', 'Alternate Site Phone', 'trim|required|min_length[2]');
-            // $this->form_validation->set_rules('facebook_page_url','Facebook Page Url','trim|required||min_length[2]');
-            // $this->form_validation->set_rules('linked_page_url','Linked Page Url','trim|required||min_length[2]');
-
-            // $this->form_validation->set_rules('google_page_url','Google+ Page Url','trim|required||min_length[2]');
-
-            // $this->form_validation->set_rules('pinterest_page_url','Pinterest Page Url','trim|required||min_length[2]');
             if ($this->form_validation->run() == false) {
                 $this->session->set_flashdata('errors', validation_errors());
                 if (!empty($id)) {
@@ -715,14 +714,6 @@ class Admin extends CI_Controller
                     $where = array(
                         'id' => $id
                     );
-                    // if (!empty($_FILES['site_logo']['name'][0])) {
-                    // $images = $this->file_upload('site_logo');
-                  
-                    // $data   = array(
-                    //     'site_logo' => $images['site_logo'][0]['site_logo']
-                    // );
-                
-                    // }
                     unset($data['created_at']);
                     $result  = $this->model->updateFields('site_setting', $data, $where);
                     $last_id = $id;
@@ -756,6 +747,70 @@ class Admin extends CI_Controller
         if ($this->controller->checkSession()) {
             $data['settings'] = $this->model->getAllwhere('site_setting');
             $data['body']       = 'view_settings';
+            $this->controller->load_view($data);
+        } else {
+            redirect('admin/index');
+        }
+    }
+
+
+    // Add Product Categories
+
+    public function categories($id = null)
+    {
+        if ($this->controller->checkSession()) {
+            $this->form_validation->set_rules('name', 'Category Name', 'trim|required|min_length[2]');
+            $this->form_validation->set_rules('description', 'Category Description', 'trim|required|min_length[2]');
+
+            
+            if ($this->form_validation->run() == false) {
+                $this->session->set_flashdata('errors', validation_errors());
+                if (!empty($id)) {
+                    $where              = array(
+                        'id' => $id
+                    );
+                    $data['categories'] = $this->model->getAllwhere('categories', $where);
+                }
+                $data['body'] = 'categories';
+                $this->controller->load_view($data);
+            } else {
+                $category_name = $this->input->post('name');
+                $category_desc     = $this->input->post('description');
+               
+                $data           = array(
+                    'name' => $category_name,
+                    'description' => $category_desc,
+                    'is_active' => 1,
+                    'created_at' => date('Y-m-d H:i:s')
+                );
+                if (!empty($id)) {
+                    $where = array(
+                        'id' => $id
+                    );
+                    unset($data['created_at']);
+                    $result  = $this->model->updateFields('categories', $data, $where);
+                    $last_id = $id;
+                } else {
+                    $last_id = $this->model->insertData('categories', $data);
+
+                }
+                
+                if ($last_id) {
+                    $this->session->set_flashdata('info_message', 'Category Successfully Updated!!!');
+                } else {
+                    $this->session->set_flashdata('error_msg', "Something Went Wrong");
+                }
+                redirect('/admin/list_categories', 'refresh');
+            }
+        } else {
+            redirect('admin/index');
+        }
+    }
+    public function list_categories()
+    {
+        if ($this->controller->checkSession()) {
+            $data['categories'] = $this->model->getAllwhere('categories');
+            $data['body']       = 'list_categories';
             $this->controller->load_view($data);
         } else {
             redirect('admin/index');

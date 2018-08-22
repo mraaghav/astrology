@@ -34,12 +34,20 @@ class Front extends CI_Controller
         $data['body']    = 'about';
         $this->controller->load_view($data);
     }
-    public function shop()
+    public function shop($id=null)
     {
         $data['setting']  = $this->model->getAll('site_setting', '');
-        $where            = array(
-            'products.is_active' => 1
-        );
+
+        $where1 = array('is_active'=>1);
+
+        $data['categories']  = $this->model->getAllwhere('categories', $where1);
+
+        if(!empty($id)){
+            $where  = array('products.is_active' => 1,'products.category_id'=>$id);
+        }else{
+            $where  = array('products.is_active' => 1);
+        }        
+
         $data['products'] = $this->model->GetJoinRecord('products', 'id', 'product_images', 'product_id', 'products.id  as p_id,products.name,products.price,products.description,product_images.image', $where, 'products.id');
         $data['body']     = 'shop';
         $this->controller->load_view($data);
@@ -80,38 +88,37 @@ class Front extends CI_Controller
     public function signup()
     {
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('first_name', 'First Name', 'required');
-        $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required', array(
+        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
+        $this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
+        $this->form_validation->set_rules('register_password', 'Password', 'trim|required', array(
             'required' => 'You must provide a %s.'
         ));
-        //$this->form_validation->set_rules('passconf', 'Password Confirmation', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('mobile', 'Mobile', 'required');
-        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('register_email', 'Email', 'trim|required|valid_email|is_unique[users.email]');
+        $this->form_validation->set_rules('mobile', 'Mobile', 'trim|required');
+        $this->form_validation->set_rules('gender', 'Gender', 'trim|required');
         if ($this->form_validation->run() == FALSE) {
-            //$this->session->set_flashdata('user', 'User Detailes has been Added Successfully');
-            $data['body'] = 'index';
-            $this->controller->load_view($data);
+            $data['response'] = validation_errors();
+            $data['msg'] = 'error';
+            $data['code'] = '100';
+            echo json_encode($data);
         } else {
-            if (isset($_POST['submit'])) {
-                $rand   = rand(10000, 99999);
-                $data   = array(
-                    'first_name' => $this->input->post('first_name'),
-                    'last_name' => $this->input->post('last_name'),
-                    'password' => md5($this->input->post('password')),
-                    'email' => $this->input->post('email'),
-                    'username' => $this->input->post('first_name') . '_' . $rand,
-                    'mobile' => $this->input->post('mobile'),
-                    'gender' => $this->input->post('gender'),
-                    'user_role' => 2
-                );
-                //print_r($data); die;
-                $result = $this->model->insertData('users', $data);
-                $this->session->set_flashdata('info_msg', 'User Detailes has been Added Successfully');
-                $data['body'] = 'index';
-                $this->controller->load_view($data);
-            }
+            $rand   = rand(10000, 99999);
+            $data   = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'password' => md5($this->input->post('register_password')),
+                'email' => $this->input->post('register_email'),
+                'username' => $this->input->post('first_name') . '_' . $rand,
+                'mobile' => $this->input->post('mobile'),
+                'gender' => $this->input->post('gender'),
+                'user_role' => 2
+            );
+            $result = $this->model->insertData('users', $data);
+            unset($data);
+            $data['response'] = 'You have been successfully registered';
+            $data['msg'] = 'success';
+            $data['code'] = '200';
+            echo json_encode($data);            
         }
     }
     public function signin()
@@ -119,6 +126,7 @@ class Front extends CI_Controller
         $this->load->library('form_validation');
         $this->form_validation->set_rules('email', 'Email', 'trim|required|xss_clean');
         $this->form_validation->set_rules('password', 'Password', 'trim|required|xss_clean');
+
         $data['error'] = "";
         if ($this->form_validation->run() == FALSE) {
             $data['body'] = 'index';
@@ -138,14 +146,24 @@ class Front extends CI_Controller
                         'userrole' => $row->user_role
                     );
                     $this->session->set_userdata('logged_in', $sess_array);
-                    $this->session->set_flashdata('info_msg', 'User Login Successfully');
-                    $data['body'] = 'index';
-                    $this->controller->load_view($data);
+                    $data['msg'] = "success";
+                    $data['code'] = 200;
+                    $data['response'] = "You have loggedin successfully !! you will be redirected automatically";
+                    echo json_encode($data);
+
+                    //$this->session->set_flashdata('info_msg', 'User Login Successfully');
+                    //$data['body'] = 'index';
+                    //$this->controller->load_view($data);
+                    //echo 'You have loggedin successfully';
                 }
             } else {
-                $data['error'] = "Invalid usrername or password";
-                $data['body']  = 'index';
-                $this->controller->load_view($data);
+                    $data['msg']        = "error";
+                    $data['code']       = 100;
+                    $data['response']   = "Invalid Username or Password !!! Please try again";
+                    echo json_encode($data);
+                
+                //$data['body']  = 'index';
+                //$this->controller->load_view($data);
             }
         }
     }
@@ -302,12 +320,7 @@ class Front extends CI_Controller
             'price' => $products[0]->price,
             'image' => $products[0]->image
         );
-        
-        
-        // echo '<pre>';
-        // print_r($this->cart->contents());
-        // die;
-        
+                
         if ($exists == 1) {
             $this->cart->update($data);
         } else
@@ -495,9 +508,8 @@ class Front extends CI_Controller
     
     
     function buy()
-    {
-        
-        if ($this->controller->checkSession()) {
+    {        
+        if ($this->session->userdata('logged_in')['userrole']) {
             // Set variables for paypal form
             $returnURL = base_url('front/success'); //payment success url
             $cancelURL = base_url('front/cancel'); //payment cancel url
@@ -514,7 +526,7 @@ class Front extends CI_Controller
             $this->paypal_lib->add_field('upload', '1');
             
             //$this->paypal_lib->add_field('cmd', '_cart');
-            //$this->paypal_lib->add_field('custom', $userID);
+            $this->paypal_lib->add_field('custom', $this->session->userdata('logged_in')['id']);
             
             $i = 1;
             
@@ -537,11 +549,9 @@ class Front extends CI_Controller
     
     function success()
     {
-        $data['setting'] = $this->model->getAll('site_setting', '');
-        // Get the transaction data
+
         $paypalInfo      = $this->input->post();
-        
-        for ($i = 1; $i < $paypalInfo['num_cart_items']; $i++) {
+        for ($i = 1; $i <= $paypalInfo['num_cart_items']; $i++) {
             $data['item'][$i]['name']        = $paypalInfo['item_name' . $i];
             $data['item'][$i]['item_number'] = $paypalInfo['item_number' . $i];
             $data['item'][$i]['quantity']    = $paypalInfo['quantity' . $i];
@@ -552,10 +562,47 @@ class Front extends CI_Controller
         $data['currency_code']  = $paypalInfo['mc_currency'];
         $data['status']         = $paypalInfo['payment_status'];
         $data['pending_reason'] = $paypalInfo['pending_reason'];
+
+        $data['setting'] = $this->model->getAll('site_setting','');
+        // Get the transaction data
+        $paypalInfo      = $this->input->post();       
         
+        $order_history_data = array('user_id'=>$paypalInfo['custom'],'txn_id'=>$data['txn_id'],'payment_amount'=>$data['payment_amt'],'currency_code'=>$data['currency_code'],'status'=>$data['status'],'pending_reason'=>$data['pending_reason'],'is_active'=>1,
+            'created_at'=>date('Y-m-d H:i:s'));
+        $this->db->trans_begin();
+        $trans1 =  $this->model->insertData('order_history', $order_history_data);
+
+
+        for ($i = 1; $i <= $paypalInfo['num_cart_items']; $i++) {
+            $data['item1'][$i]['order_id']    = $trans1;
+            $data['item1'][$i]['item_id']     = $paypalInfo['item_number'.$i];
+            $data['item1'][$i]['quantity']    = $paypalInfo['quantity'.$i];
+            $data['item1'][$i]['total']       = $paypalInfo['mc_gross_'.$i];
+            $data['item1'][$i]['is_active']   = 1;
+            $data['item1'][$i]['created_at']  = date('Y-m-d H:i:s');
+        }
+
+        $trans2 =  $this->model->insertBatch('order_details', $data['item1']);    
+        
+        if($this->db->trans_status() === FALSE || !isset($trans1) || !isset($trans2)){
+            $this->db->trans_rollback();
+            $data['body'] = 'cancel';
+        }else{
+            $this->db->trans_commit();
+            unset($data['item1']);
+            foreach ($this->cart->contents() as $items) {
+                $data   = array(
+                    'rowid' => $items['rowid'],
+                    'qty' => 0
+                );
+            }
+        $this->cart->update($data);
+            $data['body'] = 'success';
+        }
+
+        $this->cart->destroy();        
         // Pass the transaction data to view
-        
-        $data['body'] = 'success';
+       
         $this->controller->load_view($data);
         
     }

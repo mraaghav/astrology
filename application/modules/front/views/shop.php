@@ -73,23 +73,17 @@
                     <aside class="widget widget_categories">
                         <h4 class="widget-title">Categories</h4>
                         <ul>
-                            <li><a href="#">yantra</a></li>
-                            <li><a href="#">navgraha yantra</a></li>
-                            <li><a href="#">books</a></li>
-                            <li><a href="#">gemstone</a></li>
-                            <li><a href="#">ring</a></li>
-                            <li><a href="#">feng shui</a></li>
-                            <li><a href="#">lucky stones</a></li>
+                        <?php foreach($categories as $category){?>
+                            <li><a href="<?php echo base_url('front/shop/'.$category->id); ?>"><?php echo strtoupper($category->name);?></a></li>
+                        <?php }?>   
                         </ul>
                     </aside>
                     <aside class="widget widget_latest_product">
                         <h4 class="widget-title">new products</h4>
                         <ul>
-                            <li><a href="#">gemstone</a></li>
-                            <li><a href="#">navgraha yantra</a></li>
-                            <li><a href="#">rings</a></li>
-                            <li><a href="#">yantra</a></li>
-                            <li><a href="#">books</a></li>
+                        <?php  foreach(array_reverse($products) as $product){?>
+                            <li><a href="<?php echo base_url('front/product_details/'.$product->p_id); ?>"><?php echo strtoupper($product->name);?></a></li>
+                        <?php }?>
                         </ul>
                     </aside>
                 </div>

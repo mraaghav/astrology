@@ -59,17 +59,17 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li>
-                        <a href="#"><i class="fa fa-edit fa-fw" style="font-size: 21px"></i> Content<span class="fa arrow"></span></a>
+                    <li>
+                        <a href="#"><i class="fa fa-edit fa-fw" style="font-size: 21px"></i> Product Categories<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">
                             <li>
-                                <a href="<?php //echo base_url('admin/contents')?>">Add Content</a>
+                                <a href="<?php echo base_url('admin/categories')?>">Add Categories</a>
                             </li>
                             <li>
-                                <a href="<?php //echo base_url('admin/list_contents/')?>">View Content</a>
+                                <a href="<?php echo base_url('admin/list_categories/')?>">View Categories</a>
                             </li>
                         </ul>
-                    </li> -->
+                    </li>
                     <li>
                         <a href="#"><i class="fa fa-star fa-fw" style="font-size: 21px"></i> Horoscope<span class="fa arrow"></span></a>
                         <ul class="nav nav-second-level">

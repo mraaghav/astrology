@@ -24,55 +24,58 @@
         <div class="row">
             <div class="col-lg-12 col-xs-12">
                 <div class="success_page_msg">
-                    <h2 style="font-size:18px; color:#313131; padding-bottom:8px;">Dear Member</h2>
-                    <span style="color: #646464; font-size:18px;">Your payment was successful, thank you!</span><br />
-                    <?php if(!empty($item)){
-					for($i=1;$i<=count($item);$i++){?>
-                    <span style="color: #646464;">Item Number : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">
-                            <?php echo $item[$i]['name']; ?></strong>
-                    </span><br />
-                    <span style="color: #646464;">Item quantity : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">
-                            <?php if(!empty($item[$i]['quantity'])) { echo $item[$i]['quantity'];} ?></strong>
-                    </span><br />
-                    <span style="color: #646464;">Total : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">
-                            <?php if(!empty($item[$i]['mc_gross'])){ echo $item[$i]['mc_gross'];} ?></strong>
-                    </span><br />
-                    <?php }}?>
-                    <span style="color: #646464;">TXN ID : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">
-                            <?php if(!empty($txn_id)){ echo $txn_id; }?></strong>
-                    </span><br />
-                    <span style="color: #646464;">Amount Paid : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">$
-                            <?php echo $payment_amt.' '.$currency_code; ?></strong>
-                    </span><br />
-                    <span style="color: #646464;">Payment Status : <strong style="font:15px Arial,Helvetica,sans-serif;color:#f09">
-                            <?php if(!empty($status)){ echo $status; }?></strong>
-                    </span><br />
-                    <a href="<?php echo base_url('front/shop/'); ?>" class="btn btn-primary">Continue Shopping</a>
+                    <!-- <h2 style="font-size:18px; color:#313131; padding-bottom:8px;">Dear Member</h2> -->
+                    <div class="alert alert-success">
+                        <span style="color: #646464; font-size:18px;"><strong>Dear Member !!! </strong>Your payment was successful, thank you!</span><br />
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <table class="table table-responsive table-bordered">
+
+                            <tr>
+                            <th>Item Number</th>
+                            <th>Item quantity</th>
+                            <th>Item Total</th>
+                            </tr>
+
+                                <?php if(!empty($item)){
+                                        for($i=1;$i<=count($item);$i++){?>
+                                <tr>
+                                    
+                                    <td><?php echo $item[$i]['name']; ?></td>
+                                    <td><?php if(!empty($item[$i]['quantity'])) { echo $item[$i]['quantity'];} ?></td>
+                                    <td><?php if(!empty($item[$i]['mc_gross'])){ echo $item[$i]['mc_gross'];} ?></td>
+                                </tr>
+                                <?php }}?>
+
+                                
+                                
+                            </table>
+
+                            <table class="table table-responsive table-bordered">
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <td><?php if(!empty($txn_id)){ echo $txn_id; }?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Amount Paid </th>
+                                    <td><?php echo $payment_amt.' '.$currency_code; ?></td>
+                                </tr>
+
+                                <tr>
+                                    <th>Payment Status</th>
+                                    <td><?php if(!empty($status)){ echo $status; }?></td>
+                                </tr>
+                            </table>
+
+
+                            <a href="<?php echo base_url('front/shop/'); ?>" class="btn ast_btn">Continue Shopping</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- Download wrapper start-->
-<div class="ast_download_wrapper ast_toppadder70 ast_bottompadder70">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-md-8 col-sm-10 col-xs-12 col-lg-offset-2 col-md-offset-2 col-sm-offset-1 col-xs-offset-0">
-				<div class="ast_heading">
-					<h1>Download our <span>Mobile App</span></h1>
-					<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected hummer.</p>
-				</div>
-			</div>
-			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
-				<div class="ast_download_box">
-					<ul>
-						<li><a href="#"><img src="images/content/download1.png" alt="Download" title="Download"></a></li>
-						<li><a href="#"><img src="images/content/download2.png" alt="Download" title="Download"></a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!-- Download wrapper End-->

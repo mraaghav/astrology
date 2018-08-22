@@ -78,7 +78,7 @@
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div class="ast_copyright_wrapper">
-                    <p>&copy; Copyright 2018, All Rights Reserved, <a href="#">astrology</a></p>
+                    <p>&copy; Copyright <?php echo date('Y')?>, All Rights Reserved, <a href="#">astrology</a></p>
                 </div>
             </div>
         </div>
@@ -159,8 +159,7 @@
         } else {
             return false;
         }
-    }
-            
+    }            
     $('.ast_cart_box').load("<?php echo site_url('front/load_cart');?>");                  
     $(document).on('click', '.romove_cart', function() {            
         var row_id = $(this).attr("id");            
@@ -313,6 +312,100 @@
             return false;
         }
     }
+    $(document).on('click', '.login_btn', function(e) {
+        e.preventDefault();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        if (!email) {
+            swal("Email is required");
+            return false;
+        } else if (!password) {
+            swal("Password is required");
+            return false;
+        } else {
+            $.ajax({
+                url: "<?php echo base_url('front/signin'); ?>",
+                method: "POST",
+                dataType: "json",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: function(data) {
+                    if (data.msg == "success") {
+                        swal({
+                            title: "Loggedin!",
+                            text: data.response,
+                            imageUrl: "<?php echo base_url('asset/uploads/thumbs-up.jpg');?>"
+                        });
+                        window.setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                    } else if (data.msg == "error") {
+                        swal({
+                            title: "Error!",
+                            text: data.response,
+                            //imageUrl: "<?php //echo base_url('asset/uploads/thumbs-up.jpg');?>"
+                        });
+                    }
+                }
+            });
+        }
+    });
+    $(function() {
+        $('#signup').submit(function(event) {
+            event.preventDefault();
+            var first_name = $('#first_name').val();
+            var last_name = $('#last_name').val();
+            var register_email = $('#register_email').val();
+            var register_password = $('#register_password').val();
+            var mobile = $('#mobile').val();
+            var gender = $('#gender').val();
+            if (!first_name) {
+                $('#error_first_name').val('First name is required');
+            } else if (!last_name) {
+                $('#error_last_name').val('First name is required');
+            } else if (!register_email) {
+                $('#error_register_email').val('First name is required');
+            } else if (!register_password) {
+                $('#error_register_password').val('First name is required');
+            } else if (!mobile) {
+                $('#error_mobile').val('First name is required');
+            } else if (!gender) {
+                $('#error_gender').val('First name is required');
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: "<?php echo base_url('front/signup')?>",
+                    data: {
+                        'first_name': first_name,
+                        'last_name': last_name,
+                        'register_email': register_email,
+                        'register_password': register_password,
+                        'mobile': mobile,
+                        'gender': gender
+                    },
+                    dataType: "json",
+                    success: function(results) {
+                        if (results.msg == "success") {
+                        swal({
+                            title: "Registered!",
+                            text: results.response,
+                            imageUrl: "<?php echo base_url('asset/uploads/thumbs-up.jpg');?>"
+                        });
+                        window.setTimeout(function() {
+                            window.location.reload();
+                        }, 2000);
+                        } else if (results.msg == "error") {
+                            $('#form_error').html(results.response);
+                        }
+                        
+                    }
+                });
+            }
+        });
+    });
+
 </script>
 </body>
 
