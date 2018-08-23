@@ -7,25 +7,8 @@ class Front extends CI_Controller
         parent::__construct();
         $this->load->library('cart');
         $this->load->library('paypal_lib');
-
-        if($this->session->userdata('settings')==''){
-            $this->setting();
-        }
-       // $this->data = site_setting();
-           
-     
-        // echo "<pre>";
-        // print_r($this->data[0]);die;
         
     }
-
-    public function setting(){
-        
-        $data = site_setting();
-        $this->session->set_flashdata('settings',$data);
-    }
-
-
     public function index($msg = NULL)
     {
         $data['horoscopes'] = $this->model->getAll('horoscope', '');
@@ -33,12 +16,8 @@ class Front extends CI_Controller
         $where           = array(
             'id' => 1
         );
-      
-        
-        $data['setting'] = $this->session->userdata('settings');
+        $data['setting'] = $this->model->getAll('site_setting', '');
         $data['pages']   = $this->model->getsingle('pages', $where);
-
-
         $data['body']    = 'index';
         $this->controller->load_view($data);
         
@@ -47,11 +26,7 @@ class Front extends CI_Controller
     
     public function about()
     {
-
-       $data['setting'] = $this->session->userdata('settings');//$this->model->getAll('site_setting', '');
-      
-
-
+        $data['setting'] = $this->model->getAll('site_setting', '');
         $where           = array(
             'id' => 2
         );
@@ -74,46 +49,25 @@ class Front extends CI_Controller
         }        
 
         $data['products'] = $this->model->GetJoinRecord('products', 'id', 'product_images', 'product_id', 'products.id  as p_id,products.name,products.price,products.description,product_images.image', $where, 'products.id');
-
-        $where           = array(
-            'id' => 3
-        );
-        $data['pages']   = $this->model->getsingle('pages', $where);
-
         $data['body']     = 'shop';
         $this->controller->load_view($data);
     }
     public function donate()
     {
-
-
-        $where           = array(
-            'id' => 4
-        );
-        $data['pages']   = $this->model->getsingle('pages', $where);
-        $data['setting'] = $this->session->userdata('settings');
-
+        $data['setting'] = $this->model->getAll('site_setting', '');
         $data['body']    = 'donate';
         $this->controller->load_view($data);
     }
     public function contact()
     {
-
-        $where           = array(
-            'id' => 5
-        );
-        $data['pages']   = $this->model->getsingle('pages', $where);
-        $data['setting'] = $this->session->userdata('settings');
-
+        $data['setting'] = $this->model->getAll('site_setting', '');
         $data['body']    = 'contact';
         $this->controller->load_view($data);
     }
     
     public function product_details($id = null)
     {
-
-        $data['setting']  = $this->session->userdata('settings');
-
+        $data['setting']  = $this->model->getAll('site_setting', '');
         $data['products'] = $this->db->query("SELECT x.name,x.id,x.price,x.description, GROUP_CONCAT(y.image SEPARATOR ', ') as images FROM products x LEFT JOIN product_images y ON y.product_id = x.id where x.id=$id GROUP BY x.id")->result();
         $data['body']     = 'product_detail';
         $this->controller->load_view($data);
@@ -396,12 +350,6 @@ class Front extends CI_Controller
             echo $output;
         }
     }
-
-
-    public function count_cart(){
-        $count  =  count($this->cart->contents());
-        echo $count;
-    }
     
     /*
      **  Remove Cart item by rowid
@@ -523,9 +471,7 @@ class Front extends CI_Controller
     
     public function cart()
     {
-
-        $data['setting'] = $this->session->userdata('settings');
-
+        $data['setting'] = $this->model->getAll('site_setting', '');
         $data['body']    = 'cart';
         $this->controller->load_view($data);
     }
