@@ -7,8 +7,10 @@
     <title>Astrology</title>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="description" content="Astrology">
-    <meta name="keywords" content="Astrology, signs, gemstones, tarot, horoscopes, cards, numerology, Zodiac">
+    <meta name="description" content="<?php  if(isset($pages)){ echo $pages->meta_description; } ?>">
+    <meta name="keywords" content="<?php  if(isset($pages)){ echo $pages->meta_keywords; } ?>">
+    <meta name="title" content="<?php  if(isset($pages)){ echo $pages->meta_title; } ?>">
+    
     <meta name="author" content="hsoft">
     <meta name="MobileOptimized" content="320">
     <!--Srart Style -->

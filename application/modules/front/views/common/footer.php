@@ -104,17 +104,17 @@
 </script>
 <script type="text/javascript">
     $(document).ready(function() {
-        $('#female_birth_time').timepicker({
-            timeFormat: 'h:mm:ss p',
-            interval: 1,
-            scrollbar: true
-        });
-        $('#male_birth_time').timepicker({
-            timeFormat: 'h:mm:ss p',
-            interval: 1,
-            scrollbar: true
-        });
-        var date_input = $('input[name="date"]');
+        // $('#female_birth_time').timepicker({
+        //     timeFormat: 'h:mm:ss p',
+        //     interval: 1,
+        //     scrollbar: true
+        // });
+        // $('#male_birth_time').timepicker({
+        //     timeFormat: 'h:mm:ss p',
+        //     interval: 1,
+        //     scrollbar: true
+        // });
+        var date_input = $('.date');
         var container = $('.bootstrap-iso form').length > 0 ? $('.bootstrap-iso form').parent() : "body";
         var options = {
             format: 'mm/dd/yyyy',

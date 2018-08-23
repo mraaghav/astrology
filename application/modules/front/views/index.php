@@ -241,7 +241,7 @@
                             <div class="col-xs-12 form-group">
                                 <label>Time of Birth</label>
                                 <div class="">
-                                    <input type="text" id="male_birth_time" name="male_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="Start Time">
+                                    <input type="text" id="male_birth_time" name="male_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="24 hour format eg. 14:00:00">
                                 </div>
                             </div>
                             <div class="col-xs-12">
@@ -271,7 +271,7 @@
                             <div class="col-xs-12 form-group">
                                 <label>Time of Birth</label>
                                 <div class="">
-                                    <input type="text" id="female_birth_time" name="female_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="Start Time">
+                                    <input type="text" id="female_birth_time" name="female_birth_time" class="form-control" autocomplete="off" readonly="readonly" placeholder="24 hour format eg. 14:00:00">
                                 </div>
                             </div>
                             <div class="col-xs-12">
