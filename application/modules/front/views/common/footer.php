@@ -140,6 +140,21 @@
             pause: true,
             interval: false,
         });
+
+        $.ajax({                
+            url: "<?php echo site_url('front/count_cart');?>",
+            method: "POST",
+            
+            success: function(data) { 
+                if(data!=0){
+                 $('#notification-count').text(data); 
+                 $('#notification-count').show();
+                    
+                }
+                console.log(data);                
+               // $('.ast_cart_box').html(data);                
+            }            
+        });   
     });
 
     function isAlphaOrParen(str) {

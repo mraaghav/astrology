@@ -31,6 +31,36 @@
         .red {
             color: red;
         }
+
+        .carticon {
+            position: relative;
+        }
+
+        .carticon #notification-count {
+                background: #000;
+                color: #fff;
+                width: 18px;
+                height: 18px;
+                display: block;
+                text-align: center;
+                font-size: 12px;
+                line-height: 18px;
+                border-radius: 50%;
+                position: absolute;
+                top: -10px;
+                left: 13px;
+        }
+
+        .ast_autho_wrapper li > a > i {
+            font-size: 22px;
+        }
+
+        .ast_contact_details ul li i, .ast_contact_details ul li a i {
+            font-size: 22px;
+        }
+
+
+           
     </style>
 </head>
 
@@ -69,7 +99,7 @@
                                 </div>
                             </li>
                             <li class="ast_cart">
-                                <a href="javascript:void(0);" class="carticon"><i class="fa fa-shopping-cart"></i></a>
+                                <a href="javascript:void(0);" class="carticon" ><i class="fa fa-shopping-cart"></i><span style="display: none;" id="notification-count"></span></a>
                                 <div id="customcart">
                                 </div>
                             </li>

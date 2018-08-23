@@ -396,6 +396,12 @@ class Front extends CI_Controller
             echo $output;
         }
     }
+
+
+    public function count_cart(){
+        $count  =  count($this->cart->contents());
+        echo $count;
+    }
     
     /*
      **  Remove Cart item by rowid
