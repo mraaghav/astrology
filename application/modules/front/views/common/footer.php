@@ -103,7 +103,11 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js">
 </script>
 <script type="text/javascript">
+    window.onload = function() {
+        get_count();
+    };
     $(document).ready(function() {
+
         // $('#female_birth_time').timepicker({
         //     timeFormat: 'h:mm:ss p',
         //     interval: 1,
@@ -141,21 +145,26 @@
             interval: false,
         });
 
-        $.ajax({                
-            url: "<?php echo site_url('front/count_cart');?>",
-            method: "POST",
-            
-            success: function(data) { 
-                if(data!=0){
-                 $('#notification-count').text(data); 
-                 $('#notification-count').show();
-                    
-                }
-                console.log(data);                
-               // $('.ast_cart_box').html(data);                
-            }            
-        });   
+
+        
     });
+
+    function get_count(){
+            $.ajax({                
+                url: "<?php echo site_url('front/count_cart');?>",
+                method: "POST",
+                
+                success: function(data) { 
+                    if(data!=0){
+                     $('#notification-count').text(data); 
+                     $('#notification-count').show();
+                        
+                    }
+                    console.log(data);                
+                   // $('.ast_cart_box').html(data);                
+                }            
+            });
+    }   
 
     function isAlphaOrParen(str) {
         return /^[a-zA-Z()]+$/.test(str);
@@ -185,7 +194,8 @@
                 row_id: row_id
             },
             success: function(data) {                    
-                $('.ast_cart_box').html(data);                
+                $('.ast_cart_box').html(data);    
+                get_count();              
             }            
         });        
     });
@@ -220,7 +230,8 @@
             },
             success: function(data) {
                 swal("Good job!", "Product Added to Cart", "success");     
-                $('.ast_cart_box').html(data);                
+                $('.ast_cart_box').html(data);       
+                get_count();         
             }            
         });        
     });
