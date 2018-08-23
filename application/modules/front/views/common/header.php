@@ -81,10 +81,11 @@
                     </div>
                     <div class="ast_autho_wrapper">
                         <ul>
-                            <?php $session_ary = $this->session->userdata('logged_in'); 
+                            <?php $session_ary = $this->session->userdata('logged_in');
+                           
                                 if(empty($session_ary)){?>
-                            <li><a class="popup-with-zoom-anim" href="#login-dialog"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a></li>
-                            <li><a class="popup-with-zoom-anim" href="#signup-dialog"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
+                            <li><a class="popup-with-zoom-anim" href="#login-dialog" id="login_modal"><i class="fa fa-sign-in" aria-hidden="true"></i> Log In</a></li>
+                            <li><a class="popup-with-zoom-anim" href="#signup-dialog" ><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
                             <?php }else{?>
                             <li><a href="<?php echo base_url('front/logout'); ?>"><i class="fa fa-sign-out" aria-hidden="true"></i>Log out</a></li>
                             <?php }
@@ -179,9 +180,13 @@
             <?php echo $this->session->flashdata('info_msg');?></strong>
     </div>
     <?php } if($this->session->flashdata('error_msg')){?>
+       
     <div class="alert alert-info">
         <strong>Info!</strong>
-        <?php echo $this->session->flashdata('error_msg');?>
+        <?php echo $this->session->flashdata('error_msg');
+
+        ?>
     </div>
+    
     <?php }?>
     <!-- Header End -->

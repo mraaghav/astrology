@@ -365,7 +365,7 @@
                             imageUrl: "<?php echo base_url('asset/uploads/thumbs-up.jpg');?>"
                         });
                         window.setTimeout(function() {
-                            window.location.reload();
+                            window.location.href='front/index';
                         }, 2000);
                     } else if (data.msg == "error") {
                         swal({
@@ -420,7 +420,7 @@
                             imageUrl: "<?php echo base_url('asset/uploads/thumbs-up.jpg');?>"
                         });
                         window.setTimeout(function() {
-                            window.location.reload();
+                            window.location.href='front/index';
                         }, 2000);
                         } else if (results.msg == "error") {
                             $('#form_error').html(results.response);
@@ -431,6 +431,25 @@
             }
         });
     });
+
+
+    $(document).on('click','.check_login', function(e){
+         e.preventDefault();
+         $.ajax({
+            url: "<?php echo base_url('front/checkSession'); ?>",
+            method: "GET",
+            success: function(data) {
+                if (data==0) {
+                    $('#login_modal').click();
+                }else if (data==1){
+                    window.location.href="<?php echo base_url('front/buy')?>";
+                }
+                            
+            }
+        });
+
+    });
+
 
 </script>
 </body>

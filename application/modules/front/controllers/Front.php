@@ -236,14 +236,16 @@ class Front extends CI_Controller
     }
     public function checkSession()
     {
-        if (!empty($this->session->userdata('user_role'))) {
-            $log = $this->session->userdata('user_role');
-            if (!empty($log)) {
-                return true;
-            } else {
-                return false;
-            }
+        // echo "<pre>";
+        // print_r($this->session->all_userdata());
+        if (!empty($this->session->userdata('logged_in'))) {
+            echo  1;
+            return true;
+        } else {
+            echo  0;
+            return false;
         }
+
     }
     public function check_database($password)
     {
@@ -294,13 +296,16 @@ class Front extends CI_Controller
     }
     public function logout()
     {
-        $user_data = $this->session->all_userdata();
-        foreach ($user_data as $key => $value) {
-            if ($key != 'session_id' && $key != 'ip_address' && $key != 'user_agent' && $key != 'last_activity') {
-                $this->session->unset_userdata($key);
-            }
-        }
-        $this->session->sess_destroy();
+        // echo '<pre>';
+        // print_r($this->session->all_userdata());
+        // die;
+        //$user_data = $this->session->userdata('logged_in');
+        // foreach ($user_data as $key => $value) {
+        //     if ($key != 'session_id' && $key != 'ip_address' && $key != 'user_agent' && $key != 'last_activity') {
+        $this->session->unset_userdata('logged_in');
+        //     }
+        // }
+        //$this->session->sess_destroy();
         $msg = "You have been logged out Successfully...";
         $this->index($msg);
     }
@@ -391,7 +396,7 @@ class Front extends CI_Controller
                 $output .= '<li><div class="ast_cart_img"><img src="' . $url . '" class="img-responsive"></div><div class="ast_cart_info"><a href="#">' . $items["name"] . '</a><p>' . $items['qty'] . ' X $' . $items["price"] . '</p><a href="javascript:void(0);" id="' . $items['rowid'] . '" class="ast_cart_remove ast_remove_item"><i class="fa fa-trash"></i></a></div></li>';
                 $total += $items['qty'] * $items['price'];
             }
-            $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '" class="btn btn-default">view cart</a>&nbsp;<a href="' . base_url('front/buy') . '" class="btn btn-info">checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
+            $output .= '</ul></div><div class="ast_cart_btn"><a href="' . base_url('front/cart') . '" class="btn btn-default">view cart</a>&nbsp;<a href="' . base_url('front/buy') . '" class="btn btn-info check_login" >checkout</a></div><li><div>Total</div><div>' . '$' . number_format($this->cart->total()) . '</div></li>';
             
             echo $output;
         }
@@ -595,6 +600,7 @@ class Front extends CI_Controller
             // Load paypal form
             $this->paypal_lib->paypal_auto_form();
         } else {
+
             $this->session->set_flashdata('error_msg', 'Please Signup/Login to Continue...');
             redirect('front/index');
         }
@@ -617,7 +623,7 @@ class Front extends CI_Controller
         $data['status']         = $paypalInfo['payment_status'];
         $data['pending_reason'] = $paypalInfo['pending_reason'];
 
-        $data['setting'] = $this->model->getAll('site_setting','');
+        $data['setting'] = $this->session->userdata('settings');
         // Get the transaction data
         $paypalInfo      = $this->input->post();       
         
