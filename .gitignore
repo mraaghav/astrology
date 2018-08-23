@@ -36,7 +36,7 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 /application/config/database.php
 /application/cache/*
 /application/core/*
-/application/helpers/*
+
 /application/hooks/*
 /application/language/*
 /application/logs/*
